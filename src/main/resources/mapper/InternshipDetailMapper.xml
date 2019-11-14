@@ -96,6 +96,20 @@
     from internship_detail
     where internship_id = #{internshipId,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByEntId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from internship_detail
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByEntIdAndSta" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from internship_detail
+    where enterprise_id = #{enterpriseId,jdbcType=INTEGER} AND status = #{status, jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from internship_detail
     where internship_id = #{internshipId,jdbcType=INTEGER}

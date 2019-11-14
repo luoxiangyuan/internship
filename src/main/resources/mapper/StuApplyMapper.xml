@@ -2,12 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.webnest.internship.dao.StuApplyMapper">
   <resultMap id="BaseResultMap" type="com.webnest.internship.bean.StuApply">
+  <id column="apply_id" jdbcType="INTEGER" property="applyId" />
+  <result column="stu_id" jdbcType="VARCHAR" property="stuId" />
+  <result column="exp_id" jdbcType="INTEGER" property="expId" />
+  <result column="apply_status" jdbcType="VARCHAR" property="applyStatus" />
+  <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime" />
+</resultMap>
+
+  <resultMap id="WithStuResultMap" type="com.webnest.internship.bean.StuApply">
     <id column="apply_id" jdbcType="INTEGER" property="applyId" />
     <result column="stu_id" jdbcType="VARCHAR" property="stuId" />
     <result column="exp_id" jdbcType="INTEGER" property="expId" />
     <result column="apply_status" jdbcType="VARCHAR" property="applyStatus" />
     <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime" />
+
   </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -89,6 +99,26 @@
     from stu_apply
     where apply_id = #{applyId,jdbcType=INTEGER}
   </select>
+
+  <select id="selectWithStu" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    stu_apply.apply_id,
+    stu_apply.stu_id,
+    stu_apply.exp_id,
+    stu_apply.apply_status,
+    stu_apply.submit_time,
+    student.`name`,
+    class.`name`
+    <include refid="Base_Column_List" />
+    FROM
+    stu_apply
+    INNER JOIN student ON stu_apply.stu_id = student.stu_id
+    INNER JOIN class ON student.stu_class = class.class_id
+    where exp_id = #{expId,jdbcType=INTEGER}
+    GROUP BY
+    stu_apply.apply_status
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from stu_apply
     where apply_id = #{applyId,jdbcType=INTEGER}

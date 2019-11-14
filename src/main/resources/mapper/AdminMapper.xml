@@ -84,7 +84,10 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select admin.admin_id,
+    admin.`name`,
+    admin.college,
+    admin.email
     <include refid="Base_Column_List" />
     from admin
     where admin_id = #{adminId,jdbcType=INTEGER}

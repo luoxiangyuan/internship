@@ -13,6 +13,8 @@ public class StuApply {
 
     private Date submitTime;
 
+    private Student student;
+
     public Integer getApplyId() {
         return applyId;
     }

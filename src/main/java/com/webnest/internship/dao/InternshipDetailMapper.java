@@ -4,7 +4,9 @@ import com.webnest.internship.bean.InternshipDetail;
 import com.webnest.internship.bean.InternshipDetailExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface InternshipDetailMapper {
     long countByExample(InternshipDetailExample example);
 
@@ -17,6 +19,10 @@ public interface InternshipDetailMapper {
     int insertSelective(InternshipDetail record);
 
     List<InternshipDetail> selectByExample(InternshipDetailExample example);
+
+    List<InternshipDetail> selectByEntId(int EnterpriseId);
+
+    List<InternshipDetail> selectByEntIdAndSta(int EnterpriseId, String status);
 
     InternshipDetail selectByPrimaryKey(Integer internshipId);
 

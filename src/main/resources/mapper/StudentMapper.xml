@@ -89,7 +89,15 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select student.stu_id,
+    student.`name`,
+    student.gender,
+    student.tel,
+    student.introduction,
+    student.email,
+    student.exps,
+    student.works,
+    student.stu_class
     <include refid="Base_Column_List" />
     from student
     where stu_id = #{stuId,jdbcType=VARCHAR}

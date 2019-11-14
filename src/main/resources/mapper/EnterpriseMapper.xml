@@ -93,7 +93,18 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select enterprise_id,
+    enterprise.type,
+    enterprise.`name`,
+    enterprise.address,
+    enterprise.email,
+    enterprise.contact_name,
+    enterprise.contact_tel,
+    enterprise.intro,
+    enterprise.register_time,
+    enterprise.`status`,
+    enterprise.images,
+    enterprise.check_file
     <include refid="Base_Column_List" />
     from enterprise
     where enterprise_id = #{enterpriseId,jdbcType=INTEGER}

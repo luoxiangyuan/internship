@@ -4,7 +4,9 @@ import com.webnest.internship.bean.StuApply;
 import com.webnest.internship.bean.StuApplyExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface StuApplyMapper {
     long countByExample(StuApplyExample example);
 
@@ -17,6 +19,8 @@ public interface StuApplyMapper {
     int insertSelective(StuApply record);
 
     List<StuApply> selectByExample(StuApplyExample example);
+
+    List<StuApply> selectWithStu(int exp_id);
 
     StuApply selectByPrimaryKey(Integer applyId);
 
