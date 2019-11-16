@@ -2,21 +2,22 @@ package com.webnest.internship.controller;
 
 import com.webnest.internship.bean.InternshipDetail;
 import com.webnest.internship.bean.Msg;
+import com.webnest.internship.bean.StuAchievement;
 import com.webnest.internship.bean.StuApply;
+import com.webnest.internship.service.AchievementService;
 import com.webnest.internship.service.ApplyService;
 import com.webnest.internship.service.EnterpriseService;
 import com.webnest.internship.service.InternshipService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
-import sun.net.www.protocol.http.HttpURLConnection;
 
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.lang.annotation.Repeatable;
+
 import java.util.Date;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/enterprise")
@@ -27,6 +28,8 @@ public class EnterpriseController {
     InternshipService internshipService;
     @Autowired
     ApplyService applyService;
+    @Autowired
+    AchievementService achievementService;
 
 
     /**
@@ -72,16 +75,16 @@ public class EnterpriseController {
     }
 
     @DeleteMapping("/internship")
-    public Msg delInternship(@RequestParam int expId, HttpServletResponse response){
-        internshipService.delInternship(expId);
+    public Msg delInternship(@RequestParam String expId, HttpServletResponse response){
+        internshipService.delInternship(Integer.valueOf(expId));
         return Msg.success(response);
     }
 
     @PutMapping("/internship")
-    public Msg updateInternship(@RequestParam int expId,@RequestParam String topic, @RequestParam Date exp_begin_time,
+    public Msg updateInternship(@RequestParam String expId,@RequestParam String topic, @RequestParam Date exp_begin_time,
                                 @RequestParam Date exp_end_time, @RequestParam String description,
                                 @RequestParam int need_num, @RequestParam Date apply_end_time, HttpServletResponse response){
-        String internshipSta = internshipService.getInternship(expId).getStatus();
+        String internshipSta = internshipService.getInternship(Integer.valueOf(expId)).getStatus();
         if (internshipSta.equals("2")){
             Msg.fail(response).setMsg("该实训已通过审核，不可修改信息");
         }else {
@@ -132,9 +135,14 @@ public class EnterpriseController {
      * @param status 申请状态 --非必须，没有传此参数时，返回所有状态的申请，否则返回指定状态的申请
      * @return
      */
-    public Msg getApplyList(@RequestParam int internshipId, @RequestParam int page, @RequestParam(required = false) String status
+    @GetMapping("/applicationlist")
+    public Msg getApplyList(@RequestParam String internshipId, @RequestParam int page, @RequestParam(required = false) Integer status
                                 , HttpServletResponse response){
-        return Msg.success(response);
+        if (status == null){
+            return Msg.success(response).add(applyService.getApplyList(Integer.valueOf(internshipId)));
+        }else {
+            return Msg.success(response).add(applyService.getApplyListBySta(Integer.valueOf(internshipId),String.valueOf(status)));
+        }
     }
 
     //分页查询实训
@@ -151,7 +159,28 @@ public class EnterpriseController {
     }
 
     //上传实训成绩
+    @PostMapping("/result/mark")
     public Msg putMark(@RequestParam String apply_id, @RequestParam String mark, HttpServletResponse response){
+        StuAchievement stuAchievement = new StuAchievement();
+        stuAchievement.setApplyId(Integer.valueOf(apply_id));
+        stuAchievement.setMark(Double.valueOf(mark));
+        achievementService.updateAchievement(stuAchievement);
+
+        if (achievementService.checkAchievement(Integer.valueOf(apply_id))){ //判断成绩表中的所有列是否都满，如果都满，将申请表的状态改为结业
+            StuApply stuApply = new StuApply();
+            stuApply.setApplyId(Integer.valueOf(apply_id));
+            stuApply.setApplyStatus("6");
+            applyService.putApp(stuApply);
+        }
         return Msg.success(response);
     }
+
+
+
+    //学生管理
+    public Msg stuManege(@RequestParam String exp_id, @RequestParam int page, HttpServletResponse response){
+        return Msg.success(response).add(applyService.ManageStu(Integer.valueOf(exp_id)));
+    }
+
+
 }

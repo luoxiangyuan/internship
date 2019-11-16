@@ -3,6 +3,8 @@ package com.webnest.internship.dao;
 import com.webnest.internship.bean.StuApply;
 import com.webnest.internship.bean.StuApplyExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +22,11 @@ public interface StuApplyMapper {
 
     List<StuApply> selectByExample(StuApplyExample example);
 
-    List<StuApply> selectWithStu(int exp_id);
+    List<Map<String,Object>> selectByExpId(int exp_id);
+
+    List<Map<String,Object>> selectByExpIdSta(int exp_id, String status);
+
+    List<Map<String,Object>> selectStu(int exp_id);
 
     StuApply selectByPrimaryKey(Integer applyId);
 
