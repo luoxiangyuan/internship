@@ -3,6 +3,14 @@ package com.webnest.internship.bean;
 import java.util.Date;
 
 public class StuApply {
+    public StuApply(Integer applyId, String stuId, Integer expId, String applyStatus, Date submitTime) {
+        this.applyId = applyId;
+        this.stuId = stuId;
+        this.expId = expId;
+        this.applyStatus = applyStatus;
+        this.submitTime = submitTime;
+    }
+
     private Integer applyId;
 
     private String stuId;
