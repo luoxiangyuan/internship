@@ -33,4 +33,9 @@ public class ApplyService {
     public List<Map<String, Object>> ManageStu(int expId){
         return stuApplyMapper.selectStu(expId);
     }
+
+    //根据实训查询所有申请
+    public List<StuApply> getApplyList1(int internshipId) {
+        return stuApplyMapper.getByExpId(internshipId);
+    }
 }

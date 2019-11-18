@@ -104,6 +104,16 @@
     where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
   </select>
 
+  <select id="selectExpId" parameterType="java.lang.Integer" resultType="java.util.Map">
+    SELECT
+      internship_detail.internship_id AS expId,
+      internship_detail.enterprise_id AS enterpriseId
+      FROM
+      internship_detail
+      WHERE
+      internship_detail.enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+  </select>
+
   <select id="selectByEntIdAndSta" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

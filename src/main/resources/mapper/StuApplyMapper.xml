@@ -93,6 +93,13 @@
         where apply_id = #{applyId,jdbcType=INTEGER}
     </select>
 
+    <select id="getByExpId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from stu_apply
+        where exp_id = #{expId,jdbcType=INTEGER}
+    </select>
+
     <select id="selectByExpId" parameterType="java.lang.Integer" resultType="java.util.Map">
         SELECT
         stu_apply.apply_id,
@@ -123,6 +130,28 @@
         where exp_id = #{exp_id,jdbcType=INTEGER} and apply_status = #{status, jdbcType = VARCHAR}
     </select>
 
+    <select id="countSta" resultType="java.util.Map">
+        SELECT
+        stu_apply.apply_status AS `status`,
+        Count(stu_apply.apply_status) AS num
+        FROM
+        stu_apply
+        WHERE
+        stu_apply.exp_id=#{exp_id,jdbcType=INTEGER}
+        GROUP BY
+        stu_apply.apply_status
+    </select>
+
+    <select id="countAllSta" resultType="java.lang.Integer">
+        SELECT
+        Count(stu_apply.apply_id) AS total
+        FROM
+        stu_apply
+        WHERE
+        stu_apply.exp_id = #{exp_id,jdbcType=INTEGER}
+
+    </select>
+
     <select id="selectStu" resultType="java.util.Map">
         SELECT
         stu_apply.stu_id,
@@ -136,7 +165,7 @@
         INNER JOIN class ON student.stu_class = class.class_id
         INNER JOIN stu_achievement ON stu_achievement.apply_id = stu_apply.apply_id
         WHERE
-        stu_apply.exp_id = #{exp_id, jdbcType=INTERGE}
+        stu_apply.exp_id = #{exp_id, jdbcType=INTEGER}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

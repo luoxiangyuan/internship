@@ -22,11 +22,17 @@ public interface StuApplyMapper {
 
     List<StuApply> selectByExample(StuApplyExample example);
 
+    List<StuApply> getByExpId(int expId);
+
     List<Map<String,Object>> selectByExpId(int exp_id);
 
     List<Map<String,Object>> selectByExpIdSta(int exp_id, String status);
 
     List<Map<String,Object>> selectStu(int exp_id);
+
+    List<Map<String,Object>> countSta(int exp_id);
+
+    int countAllSta(int exp_id);
 
     StuApply selectByPrimaryKey(Integer applyId);
 

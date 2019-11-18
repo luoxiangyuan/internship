@@ -46,4 +46,6 @@ public class InternshipService {
     public List<InternshipDetail> getListBySta(int EnterpriseId, String status){
         return internshipDetailMapper.selectByEntIdAndSta(EnterpriseId,status);
     }
+
+
 }

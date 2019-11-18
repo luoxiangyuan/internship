@@ -3,6 +3,8 @@ package com.webnest.internship.dao;
 import com.webnest.internship.bean.InternshipDetail;
 import com.webnest.internship.bean.InternshipDetailExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +23,8 @@ public interface InternshipDetailMapper {
     List<InternshipDetail> selectByExample(InternshipDetailExample example);
 
     List<InternshipDetail> selectByEntId(int EnterpriseId);
+
+    List<Map<String,Object>> selectExpId(int enterpriseId);
 
     List<InternshipDetail> selectByEntIdAndSta(int EnterpriseId, String status);
 

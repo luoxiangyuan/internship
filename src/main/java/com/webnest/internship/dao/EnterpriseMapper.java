@@ -20,6 +20,10 @@ public interface EnterpriseMapper {
 
     List<Enterprise> selectByExample(EnterpriseExample example);
 
+    List<Enterprise> selectAllEnt();
+
+    List<Enterprise> selectAllEntBysta(String status);
+
     Enterprise selectByPrimaryKey(Integer enterpriseId);
 
     int updateByExampleSelective(@Param("record") Enterprise record, @Param("example") EnterpriseExample example);

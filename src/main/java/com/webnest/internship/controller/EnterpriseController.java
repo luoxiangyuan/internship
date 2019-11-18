@@ -4,19 +4,19 @@ import com.webnest.internship.bean.InternshipDetail;
 import com.webnest.internship.bean.Msg;
 import com.webnest.internship.bean.StuAchievement;
 import com.webnest.internship.bean.StuApply;
-import com.webnest.internship.service.AchievementService;
-import com.webnest.internship.service.ApplyService;
-import com.webnest.internship.service.EnterpriseService;
-import com.webnest.internship.service.InternshipService;
+import com.webnest.internship.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -30,6 +30,8 @@ public class EnterpriseController {
     ApplyService applyService;
     @Autowired
     AchievementService achievementService;
+    @Autowired
+    UploadFileService uploadFileService;
 
 
     /**
@@ -109,18 +111,28 @@ public class EnterpriseController {
         return Msg.success(response).add(internshipService.getInternship(expId));
     }
 
-    //查询企业信息
+    /*
+    * 查询企业信息
+    * 若为企业登录，取得session中的信息，获取登录的企业信息
+    * 若为学校登录，取得参数，根据参数查询企业信息
+    * */
     @GetMapping("/detail")
-    public Msg getEnterprise(HttpSession session, HttpServletResponse response){
-        int enterpriseId = (int) session.getAttribute("enterpriseId");
-        return Msg.success(response).add(enterpriseService.getEntprise(enterpriseId));
+    public Msg getEnterprise(HttpSession session, HttpServletResponse response,@RequestParam(required = false) String enterprise){
+        if (enterprise == null){ //当前为学校
+            Integer enterpriseId = (Integer) session.getAttribute("enterpriseId");
+            return Msg.success(response).add(enterpriseService.getEntprise(enterpriseId));
+        }
+        if (enterprise != null){ //当前为企业
+            return Msg.success(response).add(enterpriseService.getEntprise(Integer.valueOf(enterprise)));
+        }
+        return Msg.fail(response);
     }
 
     //处理申请
     @PutMapping("/application")
-    public Msg putApp(@RequestParam int apply_id, @RequestParam String apply_status, HttpServletResponse response){
+    public Msg putApp(@RequestParam String apply_id, @RequestParam String apply_status, HttpServletResponse response){
         StuApply stuApply = new StuApply();
-        stuApply.setApplyId(apply_id);
+        stuApply.setApplyId(Integer.valueOf(apply_id));
         stuApply.setApplyStatus(apply_status);
         applyService.putApp(stuApply);
         return Msg.success(response);
@@ -131,12 +143,11 @@ public class EnterpriseController {
      * @description: 分页查询申请
      * @date: 2019/11/13 20:31
      * @param internshipId 实训id
-     * @param page 页数
      * @param status 申请状态 --非必须，没有传此参数时，返回所有状态的申请，否则返回指定状态的申请
      * @return
      */
     @GetMapping("/applicationlist")
-    public Msg getApplyList(@RequestParam String internshipId, @RequestParam int page, @RequestParam(required = false) Integer status
+    public Msg getApplyList(@RequestParam String internshipId, @RequestParam(required = false) Integer status
                                 , HttpServletResponse response){
         if (status == null){
             return Msg.success(response).add(applyService.getApplyList(Integer.valueOf(internshipId)));
@@ -146,7 +157,7 @@ public class EnterpriseController {
     }
 
     //分页查询实训
-    public Msg getExpList(@RequestParam int page, @RequestParam(required = false) String status, HttpSession session
+    public Msg getExpList(@RequestParam(required = false) String status, HttpSession session
                             , HttpServletResponse response){
         int EnterpriseId = (int) session.getAttribute("EnterpriseId");
         List<InternshipDetail> list;
@@ -178,9 +189,39 @@ public class EnterpriseController {
 
 
     //学生管理
-    public Msg stuManege(@RequestParam String exp_id, @RequestParam int page, HttpServletResponse response){
+    @GetMapping("/stumanagelist")
+    public Msg stuManege(@RequestParam String exp_id, HttpServletResponse response){
         return Msg.success(response).add(applyService.ManageStu(Integer.valueOf(exp_id)));
     }
 
+    //查询申请数目
+    @GetMapping("/application/count")
+    public Msg countApply(HttpSession session,HttpServletResponse response){
+        int EnterpriseId = (int) session.getAttribute("enterpriseId");
+//        int EnterpriseId = 1;
+        List<Map<String, Object>> list = enterpriseService.countSta(EnterpriseId);
+        return Msg.success(response).add(list);
 
+    }
+
+    //企业上传结业证明
+    @PostMapping("/result/certificate")
+    public Msg uploadCertificate(HttpServletRequest req,HttpServletResponse response, MultipartFile[] multipartFiles){
+        int expId = Integer.valueOf(req.getParameter("exp_id"));
+        String filePath = new String();
+        for (int i = 0; i < multipartFiles.length; i++) {
+            String path = "achievement/" + expId;
+            filePath = uploadFileService.upload(multipartFiles[i], path, req);
+        }
+
+        List<StuApply> applies = applyService.getApplyList1(expId);
+        for (StuApply apply : applies){
+            int applyId = apply.getApplyId();
+            StuAchievement achievement = new StuAchievement();
+            achievement.setApplyId(applyId);
+            achievement.setCertificate(filePath);
+            achievementService.updateAchievement(achievement);
+        }
+        return Msg.success(response);
+    }
 }
