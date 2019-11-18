@@ -1,6 +1,15 @@
 package com.webnest.internship.bean;
 
 public class Student {
+
+    public Student(String stuId, String tel, String introduction, String exps, String works) {
+        this.stuId = stuId;
+        this.tel = tel;
+        this.introduction = introduction;
+        this.exps = exps;
+        this.works = works;
+    }
+
     private String stuId;
 
     private String name;
