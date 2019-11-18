@@ -155,12 +155,61 @@ public class StudentController {
         return Msg.success(response).add(studentService.getStudent(studentId));
     }
 
+    /**
+     * 分页查询个人申请
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @param session HttpSession
+     * @return Msg类封装 查询到的个人申请信息
+     */
     @ResponseBody
     @RequestMapping(value = "/applicationlist", method = RequestMethod.GET)
     public Msg applicationList(HttpServletRequest request,
                                HttpServletResponse response,
                                HttpSession session){
         String studentId = session.getAttribute("studentId").toString();
-        return studentService.getApplicationList(studentId);
+        return Msg.success(response).add(studentService.getApplicationList(studentId));
+    }
+
+    /**
+     * 学生修改个人信息
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @param session HttpSession
+     * @param major 专业
+     * @param tel 电话
+     * @param introduction 简介
+     * @param exps 简介
+     * @return Msg类封装 修改个人信息成功
+     */
+    @ResponseBody
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public Msg edit(HttpServletRequest request,
+                    HttpServletResponse response,
+                    HttpSession session,
+                    @RequestParam(value = "major") String major,
+                    @RequestParam(value = "tel") String tel,
+                    @RequestParam(value = "introduction") String introduction,
+                    @RequestParam(value = "exps") String exps){
+        String studentId = session.getAttribute("studentId").toString();
+        studentService.edit(studentId, major, tel, introduction, exps);
+        return Msg.success(response);
+    }
+
+    /**
+     * 查询个人信息
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @param session HttpSession
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/myinfo", method = RequestMethod.GET)
+    public Msg myInfo(HttpServletRequest request,
+                      HttpServletResponse response,
+                      HttpSession session){
+        String studentId = session.getAttribute("studentId").toString();
+        Student student = studentService.myInfo(studentId);
+        return Msg.success(response).add(student);
     }
 }

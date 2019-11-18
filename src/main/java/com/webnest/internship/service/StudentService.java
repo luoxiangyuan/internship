@@ -115,7 +115,7 @@ public class StudentService {
      * @return 学生所有申请信息
      */
     public List<StuApply> getApplicationList(String studentId){
-        List<StuApply> applicationList;
+        List<StuApply> applicationList = null;
         List<StuApply> stuApply = stuApplyMapper.selectByExample(null);
         for(StuApply stuapply : stuApply){
             if (stuapply.getStuId().equals(studentId)){
@@ -123,5 +123,26 @@ public class StudentService {
             }
         }
         return applicationList;
+    }
+
+    /**
+     * 修改个人资料
+     * @param studentId
+     * @param major
+     * @param tel
+     * @param introduction
+     * @param exps
+     */
+    public void edit(String studentId, String major, String tel, String introduction, String exps){
+        studentMapper.updateByPrimaryKeySelective(new Student(studentId,major,tel,introduction,exps));
+    }
+
+    /**
+     * 查询个人信息
+     * @param studentId
+     * @return
+     */
+    public Student myInfo(String studentId){
+        return studentMapper.selectByPrimaryKey(studentId);
     }
 }
