@@ -107,7 +107,8 @@
         stu_apply.exp_id,
         stu_apply.apply_status,
         student.`name` AS stuName,
-        class.`name` AS className
+        class.enterence_year,
+        class.`name` AS major
         FROM
         stu_apply
         INNER JOIN student ON stu_apply.stu_id = student.stu_id
@@ -122,7 +123,8 @@
         stu_apply.exp_id,
         stu_apply.apply_status,
         student.`name` AS stuName,
-        class.`name` AS className
+        class.enterence_year,
+        class.`name` AS major
         FROM
         stu_apply
         INNER JOIN student ON stu_apply.stu_id = student.stu_id
@@ -156,7 +158,8 @@
         SELECT
         stu_apply.stu_id,
         student.`name` AS stuName,
-        class.`name` AS className,
+        class.`name` AS major,
+        class.enterence_year,
         stu_achievement.mark,
         stu_achievement.work_url AS `work`
         FROM

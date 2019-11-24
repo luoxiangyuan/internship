@@ -93,13 +93,14 @@
         internship_detail
         INNER JOIN enterprise ON internship_detail.enterprise_id = enterprise.enterprise_id
         ORDER BY
-        internship_detail.exp_modify_time DESC
+        internship_detail.exp_moselectByExpIddify_time DESC
   </select>
 
     <select id="selectByExpId" parameterType="java.lang.Integer" resultType="java.util.Map">
     SELECT
         internship_detail.internship_id AS expId,
         internship_detail.topic,
+        internship_detail.description,
         enterprise.`name` AS enterprise,
         internship_detail.exp_begin_time,
         internship_detail.apply_end_time,
@@ -177,6 +178,17 @@
         stu_apply
         WHERE
         stu_apply.apply_status = 4 AND
+        stu_apply.exp_id = #{expId,jdbcType=INTEGER}
+    </select>
+    <select id="getEntCheckNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+        Count(stu_apply.apply_id) AS check_num
+        FROM
+        stu_apply
+        WHERE
+        stu_apply.apply_status = 4 or
+         stu_apply.apply_status = 2
+         AND
         stu_apply.exp_id = #{expId,jdbcType=INTEGER}
     </select>
 

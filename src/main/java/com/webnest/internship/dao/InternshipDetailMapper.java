@@ -32,6 +32,8 @@ public interface InternshipDetailMapper {
 
     int getSubmitNum(int expId);
 
+    int getEntCheckNum(int expId);
+
     List<InternshipDetail> selectByEntId(int EnterpriseId);
 
     List<Map<String,Object>> selectExpId(int enterpriseId);

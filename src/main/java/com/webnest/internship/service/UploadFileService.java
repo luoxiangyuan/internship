@@ -19,8 +19,8 @@ public class UploadFileService {
         if(uploadFile.isEmpty()){
             return null;
         }
-        String basePath = "/usr/local/Springboot/WebNest/uploadFiles";
-//        String basePath = "G:/Workspace/IntelliJ IDEA/uploadFiles";
+//        String basePath = "/usr/local/Springboot/WebNest/uploadFiles";
+        String basePath = "G:/Workspace/IntelliJ IDEA/uploadFiles";
         String filePath = new String();
 
 

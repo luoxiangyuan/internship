@@ -46,7 +46,7 @@ public class AdminController {
     //审核企业
     @PutMapping("/enterprise")
     public Msg checkEnt(@RequestParam String enterpriseId, @RequestParam int status, HttpServletResponse response) {
-        Enterprise enterprise = enterpriseService.getEntprise(Integer.valueOf(enterpriseId));
+        Enterprise enterprise = enterpriseService.getEnt(Integer.valueOf(enterpriseId));
         enterprise.setStatus(status);
         enterpriseService.updateEnt(enterprise);
         return Msg.success(response);

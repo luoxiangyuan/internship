@@ -56,7 +56,7 @@ public class EnterpriseController {
                         @RequestParam(value = "qualificate_file") MultipartFile qualificate_file,
                         @RequestParam(value = "images") MultipartFile[] images,
                         HttpServletResponse response, HttpServletRequest request) {
-        if (qualificate_file.isEmpty() || images.length==0){
+        if (qualificate_file.isEmpty() || images.length == 0) {
             msg.setMsg("请上传担保书和照片");
             msg.setCode(100);
             response.setStatus(400);
@@ -99,7 +99,7 @@ public class EnterpriseController {
                      HttpServletResponse response, HttpSession session) {
         Enterprise enterprise = enterpriseService.login(email, password);
         if (enterprise != null) {
-            session.setAttribute("enterpriseId",enterprise.getEnterpriseId());
+            session.setAttribute("enterpriseId", enterprise.getEnterpriseId());
             System.out.println(session.getAttribute("enterpriseId").toString());
             return Msg.success(response);
         }
@@ -130,7 +130,8 @@ public class EnterpriseController {
                              HttpSession session, HttpServletResponse response) {
         int EnterpriseId = (int) session.getAttribute("enterpriseId");  //获取session中的企业id
 //        int EnterpriseId = 2;
-        int status = enterpriseService.getEntprise(EnterpriseId).getStatus(); //获取企业当前审核状态
+
+        int status = (int) enterpriseService.getEntprise(EnterpriseId).get("status"); //获取企业当前审核状态
         if (status == 1) { //企业通过审核，可以发布实训
             InternshipDetail newInternship = new InternshipDetail();
             //封装internship类
@@ -156,7 +157,22 @@ public class EnterpriseController {
     }
 
     @DeleteMapping("/internship")
-    public Msg delInternship(@RequestParam String expId, HttpServletResponse response) {
+    public Msg delInternship(@RequestParam String expId, HttpServletResponse response, HttpSession session) {
+        InternshipDetail internship = internshipService.getInternship(Integer.valueOf(expId));
+        if (internship == null) {
+            msg.setMsg("没有此实训");
+            msg.setCode(100);
+            return msg;
+        }
+        if (internship.getEnterpriseId() != (int) session.getAttribute("enterpriseId")) {
+            msg.setMsg("无法删除不是您公司发布的实训");
+            msg.setCode(100);
+            return msg;
+        } else if (internship.getStatus() == 1) {
+            msg.setMsg("无法删除已通过审核的实训");
+            msg.setCode(100);
+            return msg;
+        }
         internshipService.delInternship(Integer.valueOf(expId));
         return Msg.success(response);
     }
@@ -164,9 +180,17 @@ public class EnterpriseController {
     @PutMapping("/internship")
     public Msg updateInternship(@RequestParam String expId, @RequestParam String topic, @RequestParam String exp_begin_time,
                                 @RequestParam String exp_end_time, @RequestParam String description,
-                                @RequestParam int need_num, @RequestParam String apply_end_time, HttpServletResponse response) {
-        int internshipSta = internshipService.getInternship(Integer.valueOf(expId)).getStatus();
-        if (internshipSta==2) {
+                                @RequestParam int need_num, @RequestParam String apply_end_time, HttpServletResponse response,
+                                HttpSession session) {
+        InternshipDetail internship = internshipService.getInternship(Integer.valueOf(expId));
+        if (internship == null) {
+            msg.setMsg("没有此实训");
+            msg.setCode(100);
+            return msg;
+        } else if (internship.getEnterpriseId() != (int) session.getAttribute("enterpriseId")) {
+            msg.setMsg("无法删除不是您公司发布的实训");
+            msg.setCode(100);
+        } else if (internship.getStatus() == 1) {
             msg.setMsg("该实训已通过审核，不可修改信息");
             msg.setCode(100);
             response.setStatus(400);
@@ -188,8 +212,18 @@ public class EnterpriseController {
     }
 
     @GetMapping("/internship")
-    public Msg getInternship(@RequestParam Integer expId, HttpServletResponse response) {
-        return Msg.success(response).add(internshipService.getInternship(expId));
+    public Msg getInternship(@RequestParam Integer expId, HttpServletResponse response,HttpSession session) {
+        InternshipDetail internship = internshipService.getInternship(Integer.valueOf(expId));
+        if (internship == null) {
+            msg.setMsg("没有此实训");
+            msg.setCode(100);
+            return msg;
+        }else if (internship.getEnterpriseId() != (int) session.getAttribute("enterpriseId")) {
+            msg.setMsg("无法查询不是您公司发布的实训");
+            msg.setCode(100);
+            return msg;
+        }
+        return Msg.success(response).add(internshipService.getExp(expId));
     }
 
     /*
@@ -228,7 +262,13 @@ public class EnterpriseController {
      */
     @GetMapping("/applicationlist")
     public Msg getApplyList(@RequestParam String internshipId, @RequestParam(required = false) Integer status
-            , HttpServletResponse response) {
+            , HttpServletResponse response, HttpSession session) {
+        InternshipDetail internship = internshipService.getInternship(Integer.valueOf(internshipId));
+        if (internship.getEnterpriseId() != (int) session.getAttribute("enterpriseId")) {
+            msg.setMsg("无法获得不是您公司发布的实训");
+            msg.setCode(100);
+            return msg;
+        }
         if (status == null) {
             return Msg.success(response).add(applyService.getApplyList(Integer.valueOf(internshipId)));
         } else {
@@ -241,8 +281,8 @@ public class EnterpriseController {
     public Msg getExpList(@RequestParam(required = false) Integer status, HttpSession session
             , HttpServletResponse response) {
         int EnterpriseId = (int) session.getAttribute("EnterpriseId");
-//        int EnterpriseId = 1;
-        List<InternshipDetail> list = new ArrayList<>();
+//        int EnterpriseId = 37;
+        List<Map<String,Object>> list = new ArrayList<>();
         if (status == null) { //没有传入status参数，返回公司的所有实训信息
             list = internshipService.getList(EnterpriseId);
         } else {
@@ -269,7 +309,13 @@ public class EnterpriseController {
 
     //学生管理
     @GetMapping("/stumanagelist")
-    public Msg stuManege(@RequestParam String exp_id, HttpServletResponse response) {
+    public Msg stuManege(@RequestParam String exp_id, HttpServletResponse response,HttpSession session) {
+        InternshipDetail internship = internshipService.getInternship(Integer.valueOf(exp_id));
+        if (internship.getEnterpriseId() != (int) session.getAttribute("enterpriseId")) {
+            msg.setMsg("无法查询不是您公司发布的实训");
+            msg.setCode(100);
+            return msg;
+        }
         return Msg.success(response).add(applyService.ManageStu(Integer.valueOf(exp_id)));
     }
 
@@ -277,7 +323,7 @@ public class EnterpriseController {
     @GetMapping("/application/count")
     public Msg countApply(HttpSession session, HttpServletResponse response) {
         int EnterpriseId = (int) session.getAttribute("enterpriseId");
-//        int EnterpriseId = 1;
+//        int EnterpriseId = 37;
         List<Map<String, Object>> list1 = enterpriseService.countSta(EnterpriseId);
         ArrayList<Map<String, Object>> list = new ArrayList<>();
         for (Map<String, Object> map : list1) {
@@ -291,6 +337,11 @@ public class EnterpriseController {
     //企业上传结业证明
     @PostMapping("/result/certificate")
     public Msg uploadCertificate(HttpServletRequest req, HttpServletResponse response, @RequestParam(value = "certificate") MultipartFile[] multipartFiles) {
+        if (multipartFiles.length == 0){
+            msg.setMsg("请上传结业证明");
+            msg.setCode(100);
+            return msg;
+        }
         int expId = Integer.valueOf(req.getParameter("exp_id"));
         String filePath = new String();
         for (int i = 0; i < multipartFiles.length; i++) {

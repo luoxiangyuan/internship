@@ -20,7 +20,24 @@ public class EnterpriseService {
     StuApplyMapper stuApplyMapper;
 
     //根据公司id，获取公司信息
-    public Enterprise getEntprise(int id){
+    public Map<String,Object> getEntprise(int id){
+        Enterprise enterprise = enterpriseMapper.selectByPrimaryKey(id);
+        Map<String,Object> ent = new HashMap<String, Object>();
+        ent.put("enterpriseId",enterprise.getEnterpriseId());
+        ent.put("type",enterprise.getType());
+        ent.put("name",enterprise.getName());
+        ent.put("address",enterprise.getAddress());
+        ent.put("email",enterprise.getEmail());
+        ent.put("contact_name",enterprise.getContactName());
+        ent.put("contact_tel",enterprise.getContactTel());
+        ent.put("intro",enterprise.getIntro());
+        ent.put("register_time",enterprise.getRegisterTime());
+        ent.put("status",enterprise.getStatus());
+        ent.put("images",enterprise.getImages());
+        return ent;
+    }
+
+    public Enterprise getEnt(int id){
         return enterpriseMapper.selectByPrimaryKey(id);
     }
 
@@ -53,11 +70,11 @@ public class EnterpriseService {
                 StaMap.put("enterpriseId",map.get("enterpriseId"));
             }
             for (Map<String,Object> map1 : staList){
-                if (map1.get("status").equals("0")){
+                if (map1.get("status").equals(0)){
                     StaMap.put("applying_num",map1.get("num"));
-                }else if(map1.get("status").equals("2")){
+                }else if(map1.get("status").equals(2)){
                     StaMap.put("enterprise_pass_num",map1.get("num"));
-                }else if (map1.get("status").equals("4")){
+                }else if (map1.get("status").equals(4)){
                     StaMap.put("stu_pass_num",map1.get("num"));
                 }
                 int total = stuApplyMapper.countAllSta(expId);
