@@ -3,8 +3,12 @@ package com.webnest.internship.dao;
 import com.webnest.internship.bean.Student;
 import com.webnest.internship.bean.StudentExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
+
+@Component
 public interface StudentMapper {
     long countByExample(StudentExample example);
 
@@ -15,6 +19,10 @@ public interface StudentMapper {
     int insert(Student record);
 
     int insertSelective(Student record);
+
+    List<Map<String,Object>> selectApplyIdByGrade(String grade);
+
+    List<Map<String,Object>> selectByGrade(String grade);
 
     List<Student> selectByExample(StudentExample example);
 

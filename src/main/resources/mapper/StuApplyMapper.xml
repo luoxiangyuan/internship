@@ -127,7 +127,7 @@
         stu_apply
         INNER JOIN student ON stu_apply.stu_id = student.stu_id
         INNER JOIN class ON student.stu_class = class.class_id
-        where exp_id = #{exp_id,jdbcType=INTEGER} and apply_status = #{status, jdbcType = VARCHAR}
+        where exp_id = #{exp_id,jdbcType=INTEGER} and apply_status = #{status, jdbcType = INTEGER}
     </select>
 
     <select id="countSta" resultType="java.util.Map">

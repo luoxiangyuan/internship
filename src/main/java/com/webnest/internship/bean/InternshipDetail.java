@@ -1,5 +1,7 @@
 package com.webnest.internship.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class InternshipDetail {
@@ -11,7 +13,7 @@ public class InternshipDetail {
 
     private String description;
 
-    private String status;
+    private int status;
 
     private Integer needNum;
 
@@ -57,12 +59,12 @@ public class InternshipDetail {
         this.description = description == null ? null : description.trim();
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public Integer getNeedNum() {

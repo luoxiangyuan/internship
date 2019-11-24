@@ -20,13 +20,23 @@ public interface InternshipDetailMapper {
 
     int insertSelective(InternshipDetail record);
 
+    List<Map<String,Object>> selectAll();
+
+    Map<String,Object> selectByExpId(int expId);
+
+    List<Map<String,Object>> selectAllBySta(int status);
+
     List<InternshipDetail> selectByExample(InternshipDetailExample example);
+
+    int getCheckNum(int expId);
+
+    int getSubmitNum(int expId);
 
     List<InternshipDetail> selectByEntId(int EnterpriseId);
 
     List<Map<String,Object>> selectExpId(int enterpriseId);
 
-    List<InternshipDetail> selectByEntIdAndSta(int EnterpriseId, String status);
+    List<InternshipDetail> selectByEntIdAndSta(int EnterpriseId, int status);
 
     InternshipDetail selectByPrimaryKey(Integer internshipId);
 

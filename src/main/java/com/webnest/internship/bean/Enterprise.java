@@ -1,5 +1,6 @@
 package com.webnest.internship.bean;
 
+
 import java.util.Date;
 
 public class Enterprise {
@@ -23,7 +24,7 @@ public class Enterprise {
 
     private Date registerTime;
 
-    private String status;
+    private int status;
 
     private String images;
 
@@ -109,12 +110,12 @@ public class Enterprise {
         this.registerTime = registerTime;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getImages() {

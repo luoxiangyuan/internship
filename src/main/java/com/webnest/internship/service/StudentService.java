@@ -87,7 +87,7 @@ public class StudentService {
      * @param studentId 学生id
      */
     public void postApplication(int id, String studentId){
-        stuApplyMapper.insertSelective(new StuApply(null, studentId, id, "0", new Date()));
+        stuApplyMapper.insertSelective(new StuApply(null, studentId, id, 0, new Date()));
     }
 
     /**
@@ -97,7 +97,7 @@ public class StudentService {
      * @param studentId 学生id
      */
     public void putApplication(int applyId, int id, String studentId){
-        stuApplyMapper.updateByPrimaryKeySelective(new StuApply(applyId, studentId, id , "4",null));
+        stuApplyMapper.updateByPrimaryKeySelective(new StuApply(applyId, studentId, id , 0,null));
     }
 
     /**

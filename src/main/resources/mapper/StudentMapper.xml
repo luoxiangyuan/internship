@@ -122,16 +122,34 @@
             student
         INNER JOIN class ON student.stu_class = class.class_id
     </select>
+    <select id="selectApplyIdByGrade" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+            stu_apply.apply_id,
+            stu_apply.stu_id
+            FROM
+            student
+            INNER JOIN class ON student.stu_class = class.class_id
+            INNER JOIN stu_apply ON stu_apply.stu_id = student.stu_id
+            WHERE
+            class.`name` LIKE #{grade,jdbcType=VARCHAR} AND
+            stu_apply.apply_status = 4
+    </select>
+
+    <select id="selectByGrade" parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT
+        student.stu_id,
+        class.enterence_year AS enterence_year,
+        student.`name` AS stuName
+    FROM
+        student
+    INNER JOIN class ON student.stu_class = class.class_id
+    ORDER BY
+        student.stu_id ASC
+    </select>
+
+
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select student.stu_id,
-        student.`name`,
-        student.gender,
-        student.tel,
-        student.introduction,
-        student.email,
-        student.exps,
-        student.works,
-        student.stu_class
+        select
         <include refid="Base_Column_List"/>
         from student
         where stu_id = #{stuId,jdbcType=VARCHAR}

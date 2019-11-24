@@ -1,8 +1,6 @@
 package com.webnest.internship.service;
 
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import com.webnest.internship.bean.Enterprise;
-import com.webnest.internship.bean.InternshipDetail;
 import com.webnest.internship.dao.EnterpriseMapper;
 import com.webnest.internship.dao.InternshipDetailMapper;
 import com.webnest.internship.dao.StuApplyMapper;
@@ -38,7 +36,7 @@ public class EnterpriseService {
 
     //根据审核状态取得企业
     public List<Enterprise> getAllBySta(int status){
-        return enterpriseMapper.selectAllEntBysta(String.valueOf(status));
+        return enterpriseMapper.selectAllEntBysta(status);
     }
 
     //查询申请数目
@@ -68,5 +66,16 @@ public class EnterpriseService {
             list.add(StaMap);
         }
         return list;
+    }
+
+    //企业注册
+    public void register(Enterprise enterprise){
+        enterpriseMapper.insertSelective(enterprise);
+    }
+
+    //企业登录
+    public Enterprise login(String email,String password){
+        Enterprise enterprise = enterpriseMapper.selectByEmail(email,password);
+        return enterprise;
     }
 }

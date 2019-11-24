@@ -26,4 +26,9 @@ public class AchievementService {
     public void updateAchievement(StuAchievement stuAchievement){
         stuAchievementMapper.updateByPrimaryKeySelective(stuAchievement);
     }
+
+    //根据id取得成绩
+    public StuAchievement getAchievement(int applyId){
+        return stuAchievementMapper.selectByPrimaryKey(applyId);
+    }
 }

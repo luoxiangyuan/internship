@@ -1,13 +1,9 @@
 package com.webnest.internship.bean;
-
-import org.apache.ibatis.session.defaults.DefaultSqlSession;
-import sun.awt.SunHints;
-
+import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletResponse;
-import java.security.Key;
-import java.util.HashMap;
-import java.util.Map;
 
+
+@Component
 public class Msg {
     // 状态码 200--成功 100 -- 失败
     private int code;
@@ -28,7 +24,7 @@ public class Msg {
     //处理失败
     public static Msg fail(HttpServletResponse response){
         Msg result = new Msg();
-        response.setStatus(100);
+        response.setStatus(400);
         result.setCode(100);
         result.setMsg("处理失败");
         return result;

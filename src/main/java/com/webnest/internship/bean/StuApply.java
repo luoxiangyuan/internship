@@ -1,9 +1,10 @@
 package com.webnest.internship.bean;
 
+
 import java.util.Date;
 
 public class StuApply {
-    public StuApply(Integer applyId, String stuId, Integer expId, String applyStatus, Date submitTime) {
+    public StuApply(Integer applyId, String stuId, Integer expId, int applyStatus, Date submitTime) {
         this.applyId = applyId;
         this.stuId = stuId;
         this.expId = expId;
@@ -17,11 +18,15 @@ public class StuApply {
 
     private Integer expId;
 
-    private String applyStatus;
+    private int applyStatus;
 
     private Date submitTime;
 
     private Student student;
+
+    public StuApply() {
+
+    }
 
     public Integer getApplyId() {
         return applyId;
@@ -47,12 +52,12 @@ public class StuApply {
         this.expId = expId;
     }
 
-    public String getApplyStatus() {
+    public int getApplyStatus() {
         return applyStatus;
     }
 
-    public void setApplyStatus(String applyStatus) {
-        this.applyStatus = applyStatus == null ? null : applyStatus.trim();
+    public void setApplyStatus(int applyStatus) {
+        this.applyStatus = applyStatus;
     }
 
     public Date getSubmitTime() {

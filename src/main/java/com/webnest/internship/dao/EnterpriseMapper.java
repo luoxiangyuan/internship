@@ -22,7 +22,9 @@ public interface EnterpriseMapper {
 
     List<Enterprise> selectAllEnt();
 
-    List<Enterprise> selectAllEntBysta(String status);
+    Enterprise selectByEmail(String email,String password);
+
+    List<Enterprise> selectAllEntBysta(int status);
 
     Enterprise selectByPrimaryKey(Integer enterpriseId);
 

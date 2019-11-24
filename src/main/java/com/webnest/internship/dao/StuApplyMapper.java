@@ -26,7 +26,7 @@ public interface StuApplyMapper {
 
     List<Map<String,Object>> selectByExpId(int exp_id);
 
-    List<Map<String,Object>> selectByExpIdSta(int exp_id, String status);
+    List<Map<String,Object>> selectByExpIdSta(int exp_id, int status);
 
     List<Map<String,Object>> selectStu(int exp_id);
 

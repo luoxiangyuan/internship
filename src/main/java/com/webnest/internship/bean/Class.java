@@ -5,6 +5,16 @@ public class Class {
 
     private String name;
 
+    public int getEnterenceYear() {
+        return enterenceYear;
+    }
+
+    public void setEnterenceYear(int enterenceYear) {
+        this.enterenceYear = enterenceYear;
+    }
+
+    private int enterenceYear;
+
     public Integer getClassId() {
         return classId;
     }

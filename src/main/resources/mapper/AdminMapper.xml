@@ -92,6 +92,13 @@
     from admin
     where admin_id = #{adminId,jdbcType=INTEGER}
   </select>
+  <select id="login" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from admin
+    where email = #{email,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from admin
     where admin_id = #{adminId,jdbcType=INTEGER}
