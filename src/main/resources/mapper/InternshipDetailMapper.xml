@@ -81,19 +81,19 @@
     <select id="selectAll" resultType="java.util.Map">
         SELECT
         internship_detail.internship_id AS expId,
-        internship_detail.topic,
-        enterprise.`name` AS enterprise,
-        internship_detail.exp_begin_time,
-        internship_detail.apply_end_time,
-        internship_detail.submit_time,
-        internship_detail.need_num,
-        internship_detail.`status`,
-        internship_detail.exp_end_time
+         internship_detail.topic,
+         enterprise.`name` AS enterprise,
+         internship_detail.exp_begin_time,
+         internship_detail.apply_end_time,
+         internship_detail.submit_time,
+         internship_detail.need_num,
+         internship_detail.`status`,
+         internship_detail.exp_end_time
         FROM
-        internship_detail
+            internship_detail
         INNER JOIN enterprise ON internship_detail.enterprise_id = enterprise.enterprise_id
         ORDER BY
-        internship_detail.exp_moselectByExpIddify_time DESC
+            internship_detail.exp_modify_time DESC
     </select>
 
     <select id="selectByExpId" parameterType="java.lang.Integer" resultType="java.util.Map">
@@ -209,7 +209,7 @@
         internship_detail.enterprise_id = #{enterpriseId,jdbcType=INTEGER}
     </select>
 
-    <select id="selectByEntIdAndSta" resultMap="BaseResultMap">
+    <select id="selectByEntIdAselectAllndSta" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from internship_detail
