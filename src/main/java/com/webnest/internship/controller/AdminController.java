@@ -31,9 +31,9 @@ public class AdminController {
 
     @PostMapping("/login")
     public Msg login(@RequestParam String email, @RequestParam String password,
-                     HttpServletResponse response, HttpSession session){
+                     HttpServletResponse response, HttpSession session) {
         Admin admin = adminService.login(email, password);
-        if (admin != null){
+        if (admin != null) {
             session.setAttribute("adminId", admin.getAdminId());
             return Msg.success(response);
         }
@@ -75,10 +75,10 @@ public class AdminController {
     //分页查询实训
     @GetMapping("/internshiplist")
     public Msg getIntList(@RequestParam(required = false) Integer status, HttpServletResponse response) {
-        if (status == null){
+        if (status == null) {
             List<Map<String, Object>> allExp = internshipService.getAllExp();
             return Msg.success(response).add(allExp);
-        }else {
+        } else {
             List<Map<String, Object>> allExpBySta = internshipService.getAllExpBySta(status);
             return Msg.success(response).add(allExpBySta);
         }
@@ -86,19 +86,18 @@ public class AdminController {
 
     //分页查询企业
     @GetMapping("/enterpriselist")
-    public Msg getEntList(HttpServletRequest request, @RequestParam(required = false) Integer status, HttpServletResponse response){
-        if (status == null){
+    public Msg getEntList(HttpServletRequest request, @RequestParam(required = false) Integer status, HttpServletResponse response) {
+        if (status == null) {
             List<Enterprise> all = enterpriseService.getAll();
             return Msg.success(response).add(all);
-        }
-        else {
+        } else {
             return Msg.success(response).add(enterpriseService.getAllBySta(status));
         }
     }
 
     //分年级管理学生
     @GetMapping("/stumanagelist")
-    public Msg stuManage(@RequestParam String level,HttpServletResponse response){
+    public Msg stuManage(@RequestParam String level, HttpServletResponse response) {
         List<Map<String, Object>> list = adminService.stuManage(level);
         return Msg.success(response).add(list);
     }

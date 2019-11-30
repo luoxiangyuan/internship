@@ -2,6 +2,7 @@ package com.webnest.internship.dao;
 
 import com.webnest.internship.bean.StuApply;
 import com.webnest.internship.bean.StuApplyExample;
+
 import java.util.List;
 import java.util.Map;
 
@@ -24,13 +25,13 @@ public interface StuApplyMapper {
 
     List<StuApply> getByExpId(int expId);
 
-    List<Map<String,Object>> selectByExpId(int exp_id);
+    List<Map<String, Object>> selectByExpId(int exp_id);
 
-    List<Map<String,Object>> selectByExpIdSta(int exp_id, int status);
+    List<Map<String, Object>> selectByExpIdSta(int exp_id, int status);
 
-    List<Map<String,Object>> selectStu(int exp_id);
+    List<Map<String, Object>> selectStu(int exp_id);
 
-    List<Map<String,Object>> countSta(int exp_id);
+    List<Map<String, Object>> countSta(int exp_id);
 
     int countAllSta(int exp_id);
 

@@ -212,13 +212,13 @@ public class EnterpriseController {
     }
 
     @GetMapping("/internship")
-    public Msg getInternship(@RequestParam Integer expId, HttpServletResponse response,HttpSession session) {
+    public Msg getInternship(@RequestParam Integer expId, HttpServletResponse response, HttpSession session) {
         InternshipDetail internship = internshipService.getInternship(Integer.valueOf(expId));
         if (internship == null) {
             msg.setMsg("没有此实训");
             msg.setCode(100);
             return msg;
-        }else if (internship.getEnterpriseId() != (int) session.getAttribute("enterpriseId")) {
+        } else if (internship.getEnterpriseId() != (int) session.getAttribute("enterpriseId")) {
             msg.setMsg("无法查询不是您公司发布的实训");
             msg.setCode(100);
             return msg;
@@ -280,9 +280,9 @@ public class EnterpriseController {
     @GetMapping("/internshiplist")
     public Msg getExpList(@RequestParam(required = false) Integer status, HttpSession session
             , HttpServletResponse response) {
-        int EnterpriseId = (int) session.getAttribute("EnterpriseId");
+        int EnterpriseId = (int) session.getAttribute("enterpriseId");
 //        int EnterpriseId = 37;
-        List<Map<String,Object>> list = new ArrayList<>();
+        List<Map<String, Object>> list = new ArrayList<>();
         if (status == null) { //没有传入status参数，返回公司的所有实训信息
             list = internshipService.getList(EnterpriseId);
         } else {
@@ -309,7 +309,7 @@ public class EnterpriseController {
 
     //学生管理
     @GetMapping("/stumanagelist")
-    public Msg stuManege(@RequestParam String exp_id, HttpServletResponse response,HttpSession session) {
+    public Msg stuManege(@RequestParam String exp_id, HttpServletResponse response, HttpSession session) {
         InternshipDetail internship = internshipService.getInternship(Integer.valueOf(exp_id));
         if (internship.getEnterpriseId() != (int) session.getAttribute("enterpriseId")) {
             msg.setMsg("无法查询不是您公司发布的实训");
@@ -337,7 +337,7 @@ public class EnterpriseController {
     //企业上传结业证明
     @PostMapping("/result/certificate")
     public Msg uploadCertificate(HttpServletRequest req, HttpServletResponse response, @RequestParam(value = "certificate") MultipartFile[] multipartFiles) {
-        if (multipartFiles.length == 0){
+        if (multipartFiles.length == 0) {
             msg.setMsg("请上传结业证明");
             msg.setCode(100);
             return msg;

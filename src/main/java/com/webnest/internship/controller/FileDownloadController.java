@@ -14,16 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 public class FileDownloadController {
 
     /**
+     * @param URL 文件tomcat的映射地址
+     * @return com.webnest.internship.bean.Msg
      * @author: Luo
      * @description: 下载文件控制器
      * @date: 2019/11/20 18:43
-     * @param URL 文件tomcat的映射地址
-     * @return com.webnest.internship.bean.Msg
      */
     @GetMapping("/download")
-    public Msg downFile(HttpServletRequest request, HttpServletResponse response, @RequestParam String URL){
-    String rul = "http://39.108.172.6:8000/WebNest/uploadFiles/enterprise/null/实验十.zip";
-    String path = "/usr/local/Springboot/WebNest/uploadFiles";
-    return Msg.fail(response);
+    public Msg downFile(HttpServletRequest request, HttpServletResponse response, @RequestParam String URL) {
+        String rul = "http://39.108.172.6:8000/WebNest/uploadFiles/enterprise/null/实验十.zip";
+        String path = "/usr/local/Springboot/WebNest/uploadFiles";
+        return Msg.fail(response);
     }
 }

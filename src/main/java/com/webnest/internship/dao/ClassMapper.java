@@ -2,7 +2,9 @@ package com.webnest.internship.dao;
 
 import com.webnest.internship.bean.Class;
 import com.webnest.internship.bean.ClassExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ClassMapper {

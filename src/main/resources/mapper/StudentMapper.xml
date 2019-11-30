@@ -90,8 +90,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    stu_id, name, gender, tel, introduction, email, password, exps, works, stu_class
-  </sql>
+        stu_id, name, gender, tel, introduction, email, password, exps, works, stu_class
+    </sql>
     <select id="selectByExample" parameterType="com.webnest.internship.bean.StudentExample" resultMap="BaseResultMap">
         select
         <if test="distinct">
@@ -107,7 +107,7 @@
         </if>
     </select>
     <select id="selectWithClass" parameterType="java.lang.String" resultMap="WithClassResultMap">
-      SELECT
+        SELECT
         student.stu_id,
         student.`name`,
         student.gender,
@@ -119,31 +119,31 @@
         student.works,
         class.`name` AS class_name
         FROM
-            student
+        student
         INNER JOIN class ON student.stu_class = class.class_id
     </select>
     <select id="selectApplyIdByGrade" parameterType="java.lang.String" resultType="java.util.Map">
         SELECT
-            stu_apply.apply_id,
-            stu_apply.stu_id
-            FROM
-            student
-            INNER JOIN class ON student.stu_class = class.class_id
-            INNER JOIN stu_apply ON stu_apply.stu_id = student.stu_id
-            WHERE
-            class.`name` LIKE #{grade,jdbcType=VARCHAR} AND
-            stu_apply.apply_status = 4
+        stu_apply.apply_id,
+        stu_apply.stu_id
+        FROM
+        student
+        INNER JOIN class ON student.stu_class = class.class_id
+        INNER JOIN stu_apply ON stu_apply.stu_id = student.stu_id
+        WHERE
+        class.`name` LIKE #{grade,jdbcType=VARCHAR} AND
+        stu_apply.apply_status = 4
     </select>
 
     <select id="selectByGrade" parameterType="java.lang.String" resultType="java.util.Map">
-    SELECT
+        SELECT
         student.stu_id,
         class.enterence_year AS enterence_year,
         student.`name` AS stuName
-    FROM
+        FROM
         student
-    INNER JOIN class ON student.stu_class = class.class_id
-    ORDER BY
+        INNER JOIN class ON student.stu_class = class.class_id
+        ORDER BY
         student.stu_id ASC
     </select>
 
@@ -155,9 +155,9 @@
         where stu_id = #{stuId,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from student
-    where stu_id = #{stuId,jdbcType=VARCHAR}
-  </delete>
+        delete from student
+        where stu_id = #{stuId,jdbcType=VARCHAR}
+    </delete>
     <delete id="deleteByExample" parameterType="com.webnest.internship.bean.StudentExample">
         delete from student
         <if test="_parameter != null">
@@ -165,15 +165,15 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.webnest.internship.bean.Student">
-    insert into student (stu_id, name, gender, 
-      tel, introduction, email, 
-      password, exps, works, 
-      stu_class)
-    values (#{stuId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
-      #{tel,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{exps,jdbcType=VARCHAR}, #{works,jdbcType=VARCHAR}, 
-      #{stuClass,jdbcType=INTEGER})
-  </insert>
+        insert into student (stu_id, name, gender,
+        tel, introduction, email,
+        password, exps, works,
+        stu_class)
+        values (#{stuId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR},
+        #{tel,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR}, #{exps,jdbcType=VARCHAR}, #{works,jdbcType=VARCHAR},
+        #{stuClass,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="com.webnest.internship.bean.Student">
         insert into student
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -335,16 +335,16 @@
         where stu_id = #{stuId,jdbcType=VARCHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.webnest.internship.bean.Student">
-    update student
-    set name = #{name,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=VARCHAR},
-      tel = #{tel,jdbcType=VARCHAR},
-      introduction = #{introduction,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      exps = #{exps,jdbcType=VARCHAR},
-      works = #{works,jdbcType=VARCHAR},
-      stu_class = #{stuClass,jdbcType=INTEGER}
-    where stu_id = #{stuId,jdbcType=VARCHAR}
-  </update>
+        update student
+        set name = #{name,jdbcType=VARCHAR},
+        gender = #{gender,jdbcType=VARCHAR},
+        tel = #{tel,jdbcType=VARCHAR},
+        introduction = #{introduction,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        exps = #{exps,jdbcType=VARCHAR},
+        works = #{works,jdbcType=VARCHAR},
+        stu_class = #{stuClass,jdbcType=INTEGER}
+        where stu_id = #{stuId,jdbcType=VARCHAR}
+    </update>
 </mapper>

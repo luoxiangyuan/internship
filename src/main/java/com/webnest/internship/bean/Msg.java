@@ -1,5 +1,7 @@
 package com.webnest.internship.bean;
+
 import org.springframework.stereotype.Component;
+
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -13,7 +15,7 @@ public class Msg {
     private Object data;
 
     //处理成功
-    public static Msg success(HttpServletResponse response){
+    public static Msg success(HttpServletResponse response) {
         Msg result = new Msg();
         response.setStatus(200);
         result.setCode(200);
@@ -22,7 +24,7 @@ public class Msg {
     }
 
     //处理失败
-    public static Msg fail(HttpServletResponse response){
+    public static Msg fail(HttpServletResponse response) {
         Msg result = new Msg();
         response.setStatus(400);
         result.setCode(100);
@@ -31,7 +33,7 @@ public class Msg {
     }
 
     //链式操作，向Msg的data添加JSON
-    public Msg add(Object obj){
+    public Msg add(Object obj) {
         this.setData(obj);
         return this;
     }

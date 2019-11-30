@@ -20,6 +20,7 @@ public class InternshipService {
     InternshipDetailMapper internshipDetailMapper;
     @Autowired
     EnterpriseMapper enterpriseMapper;
+
     //根据实训id查询实训
     public InternshipDetail getInternship(int id) {
         return internshipDetailMapper.selectByPrimaryKey(id);
@@ -41,24 +42,24 @@ public class InternshipService {
     }
 
     //根据企业id查询企业的所有实训
-    public List<Map<String,Object>> getList(int EnterpriseId) {
+    public List<Map<String, Object>> getList(int EnterpriseId) {
         Enterprise enterprise = enterpriseMapper.selectByPrimaryKey(EnterpriseId);
-        List<Map<String,Object>> list = new ArrayList<>();
+        List<Map<String, Object>> list = new ArrayList<>();
         List<InternshipDetail> internshipDetails = internshipDetailMapper.selectByEntId(EnterpriseId);
-        for (InternshipDetail internshipDetail : internshipDetails){
-            Map<String,Object> map = new HashMap<>();
-            map.put("expId",internshipDetail.getInternshipId());
-            map.put("topic",internshipDetail.getTopic());
-            map.put("enterprise",enterprise.getName());
-            map.put("exp_begin_time",internshipDetail.getExpBeginTime());
-            map.put("exp_end_time",internshipDetail.getExpEndTime());
-            map.put("submit_time",internshipDetail.getSubmitTime());
-            map.put("expEndTime",internshipDetail.getExpEndTime());
-            map.put("apply_end_time",internshipDetail.getApplyEndTime());
-            map.put("status",internshipDetail.getStatus());
-            map.put("submit_num",internshipDetailMapper.getSubmitNum(internshipDetail.getInternshipId()));
-            map.put("check_num",internshipDetailMapper.getCheckNum(internshipDetail.getInternshipId()));
-            if (!map.isEmpty()){
+        for (InternshipDetail internshipDetail : internshipDetails) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("expId", internshipDetail.getInternshipId());
+            map.put("topic", internshipDetail.getTopic());
+            map.put("enterprise", enterprise.getName());
+            map.put("exp_begin_time", internshipDetail.getExpBeginTime());
+            map.put("exp_end_time", internshipDetail.getExpEndTime());
+            map.put("submit_time", internshipDetail.getSubmitTime());
+            map.put("expEndTime", internshipDetail.getExpEndTime());
+            map.put("apply_end_time", internshipDetail.getApplyEndTime());
+            map.put("status", internshipDetail.getStatus());
+            map.put("submit_num", internshipDetailMapper.getSubmitNum(internshipDetail.getInternshipId()));
+            map.put("check_num", internshipDetailMapper.getCheckNum(internshipDetail.getInternshipId()));
+            if (!map.isEmpty()) {
                 list.add(map);
             }
         }
@@ -66,24 +67,24 @@ public class InternshipService {
     }
 
     //根据企业id和审核状态查询企业的所有实训
-    public List<Map<String,Object>> getListBySta(int EnterpriseId, int status) {
+    public List<Map<String, Object>> getListBySta(int EnterpriseId, int status) {
         Enterprise enterprise = enterpriseMapper.selectByPrimaryKey(EnterpriseId);
-        List<Map<String,Object>> list = new ArrayList<>();
-        List<InternshipDetail> internshipDetails = internshipDetailMapper.selectByEntIdAndSta(EnterpriseId,status);
-        for (InternshipDetail internshipDetail : internshipDetails){
-            Map<String,Object> map = new HashMap<>();
-            map.put("expId",internshipDetail.getInternshipId());
-            map.put("topic",internshipDetail.getTopic());
-            map.put("enterprise",enterprise.getName());
-            map.put("exp_begin_time",internshipDetail.getExpBeginTime());
-            map.put("exp_end_time",internshipDetail.getExpEndTime());
-            map.put("submit_time",internshipDetail.getSubmitTime());
-            map.put("expEndTime",internshipDetail.getExpEndTime());
-            map.put("apply_end_time",internshipDetail.getApplyEndTime());
-            map.put("status",internshipDetail.getStatus());
-            map.put("submit_num",internshipDetailMapper.getSubmitNum(internshipDetail.getInternshipId()));
-            map.put("check_num",internshipDetailMapper.getCheckNum(internshipDetail.getInternshipId()));
-            if (!map.isEmpty()){
+        List<Map<String, Object>> list = new ArrayList<>();
+        List<InternshipDetail> internshipDetails = internshipDetailMapper.selectByEntIdAndSta(EnterpriseId, status);
+        for (InternshipDetail internshipDetail : internshipDetails) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("expId", internshipDetail.getInternshipId());
+            map.put("topic", internshipDetail.getTopic());
+            map.put("enterprise", enterprise.getName());
+            map.put("exp_begin_time", internshipDetail.getExpBeginTime());
+            map.put("exp_end_time", internshipDetail.getExpEndTime());
+            map.put("submit_time", internshipDetail.getSubmitTime());
+            map.put("expEndTime", internshipDetail.getExpEndTime());
+            map.put("apply_end_time", internshipDetail.getApplyEndTime());
+            map.put("status", internshipDetail.getStatus());
+            map.put("submit_num", internshipDetailMapper.getSubmitNum(internshipDetail.getInternshipId()));
+            map.put("check_num", internshipDetailMapper.getCheckNum(internshipDetail.getInternshipId()));
+            if (!map.isEmpty()) {
                 list.add(map);
             }
         }
@@ -126,7 +127,7 @@ public class InternshipService {
         int entCheckNum = internshipDetailMapper.getEntCheckNum(expId);
         map1.put("submit_num", submitNum);
         map1.put("check_num", checkNum);
-        map1.put("enterprise_check_num",entCheckNum);
+        map1.put("enterprise_check_num", entCheckNum);
         return map1;
     }
 }

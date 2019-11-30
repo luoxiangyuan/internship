@@ -32,9 +32,10 @@ public class StudentController {
 
     /**
      * 学生登陆
-     * @param request HttpServletRequest
+     *
+     * @param request  HttpServletRequest
      * @param response HttpServletResponse
-     * @param email 邮箱
+     * @param email    邮箱
      * @param password 密码
      * @return Msg类封装，登陆成功 or 失败
      */
@@ -44,8 +45,8 @@ public class StudentController {
                      HttpServletResponse response,
                      @RequestParam(value = "email") String email,
                      @RequestParam(value = "password") String password,
-                     HttpSession session){
-        if(studentService.login(email, password)){
+                     HttpSession session) {
+        if (studentService.login(email, password)) {
             session.setAttribute("studentId", email);
             return Msg.success(response);
         }
@@ -54,17 +55,18 @@ public class StudentController {
 
     /**
      * 学生注册
-     * @param request HttpServletRequest
+     *
+     * @param request  HttpServletRequest
      * @param response HttpServletResponse
-     * @param student 学生实体类的属性
+     * @param student  学生实体类的属性
      * @return Msg类封装，注册成功 or 失败
      */
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Msg Register(HttpServletRequest request,
                         HttpServletResponse response,
-                        Student student){
-        if(studentService.register(student)){
+                        Student student) {
+        if (studentService.register(student)) {
             return Msg.success(response);
         }
         return Msg.fail(response);
@@ -72,48 +74,51 @@ public class StudentController {
 
     /**
      * 学生查询某个实训信息
-     * @param request HttpServletRequest
+     *
+     * @param request  HttpServletRequest
      * @param response HttpServletResponse
-     * @param id 实训id
+     * @param id       实训id
      * @return Msg类封装 查询到的某个实训信息
      */
     @ResponseBody
     @RequestMapping(value = "/internship", method = RequestMethod.GET)
     public Msg getInternship(HttpServletRequest request,
                              HttpServletResponse response,
-                             @RequestParam(value = "expId")String id){
+                             @RequestParam(value = "expId") String id) {
         InternshipDetail internshipDetail = studentService.getInternship(id);
         return Msg.success(response).add(internshipDetail);
     }
 
     /**
      * 学生查询所有实训信息
-     * @param request HttpServletRequest
+     *
+     * @param request  HttpServletRequest
      * @param response HttpServletResponse
      * @return Msg类封装 查询到的所有实训信息
      */
     @ResponseBody
     @RequestMapping(value = "/internshiplist", method = RequestMethod.GET)
     public Msg getInternshipList(HttpServletRequest request,
-                                 HttpServletResponse response){
+                                 HttpServletResponse response) {
         List<InternshipDetail> list = studentService.getInternshipList();
         return Msg.success(response).add(list);
     }
 
     /**
      * 学生报名实训
-     * @param request HttpServletRequest
+     *
+     * @param request  HttpServletRequest
      * @param response HttpServletResponse
-     * @param id 实训id
-     * @param session HttpSession
+     * @param id       实训id
+     * @param session  HttpSession
      * @return Msg类封装 报名成功 or 失败
      */
     @ResponseBody
     @RequestMapping(value = "/application", method = RequestMethod.POST)
     public Msg postApplication(HttpServletRequest request,
-                           HttpServletResponse response,
-                           @RequestParam(value = "exp_id") String id,
-                           HttpSession session){
+                               HttpServletResponse response,
+                               @RequestParam(value = "exp_id") String id,
+                               HttpSession session) {
         String studentId = session.getAttribute("studentId").toString();
         studentService.postApplication(Integer.valueOf(id), studentId);
         return Msg.success(response);
@@ -121,11 +126,12 @@ public class StudentController {
 
     /**
      * 学生确认实训
-     * @param request HttpServletRequest
+     *
+     * @param request  HttpServletRequest
      * @param response HttpServletResponse
-     * @param id 实训id
-     * @param applyId 报名id
-     * @param session HttpSession
+     * @param id       实训id
+     * @param applyId  报名id
+     * @param session  HttpSession
      * @return
      */
     @ResponseBody
@@ -134,7 +140,7 @@ public class StudentController {
                               HttpServletResponse response,
                               @RequestParam(value = "exp_id") String id,
                               @RequestParam(value = "apply_id") int applyId,
-                              HttpSession session){
+                              HttpSession session) {
         String studentId = session.getAttribute("studentId").toString();
         studentService.putApplication(applyId, Integer.valueOf(id), studentId);
         return Msg.success(response);
@@ -142,8 +148,9 @@ public class StudentController {
 
     /**
      * 查询学生信息
-     * @param request HttpServletRequest
-     * @param response HttpServletResponse
+     *
+     * @param request   HttpServletRequest
+     * @param response  HttpServletResponse
      * @param studentId 学生id
      * @return Msg类封装 查询到的某个学生信息
      */
@@ -151,35 +158,37 @@ public class StudentController {
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public Msg getStudent(HttpServletRequest request,
                           HttpServletResponse response,
-                          @RequestParam(value = "student") String studentId){
+                          @RequestParam(value = "student") String studentId) {
         return Msg.success(response).add(studentService.getStudent(studentId));
     }
 
     /**
      * 分页查询个人申请
-     * @param request HttpServletRequest
+     *
+     * @param request  HttpServletRequest
      * @param response HttpServletResponse
-     * @param session HttpSession
+     * @param session  HttpSession
      * @return Msg类封装 查询到的个人申请信息
      */
     @ResponseBody
     @RequestMapping(value = "/applicationlist", method = RequestMethod.GET)
     public Msg applicationList(HttpServletRequest request,
                                HttpServletResponse response,
-                               HttpSession session){
+                               HttpSession session) {
         String studentId = session.getAttribute("studentId").toString();
         return Msg.success(response).add(studentService.getApplicationList(studentId));
     }
 
     /**
      * 学生修改个人信息
-     * @param request HttpServletRequest
-     * @param response HttpServletResponse
-     * @param session HttpSession
-     * @param major 专业
-     * @param tel 电话
+     *
+     * @param request      HttpServletRequest
+     * @param response     HttpServletResponse
+     * @param session      HttpSession
+     * @param major        专业
+     * @param tel          电话
      * @param introduction 简介
-     * @param exps 简介
+     * @param exps         简介
      * @return Msg类封装 修改个人信息成功
      */
     @ResponseBody
@@ -190,7 +199,7 @@ public class StudentController {
                     @RequestParam(value = "major") String major,
                     @RequestParam(value = "tel") String tel,
                     @RequestParam(value = "introduction") String introduction,
-                    @RequestParam(value = "exps") String exps){
+                    @RequestParam(value = "exps") String exps) {
         String studentId = session.getAttribute("studentId").toString();
         studentService.edit(studentId, major, tel, introduction, exps);
         return Msg.success(response);
@@ -198,16 +207,17 @@ public class StudentController {
 
     /**
      * 查询个人信息
-     * @param request HttpServletRequest
+     *
+     * @param request  HttpServletRequest
      * @param response HttpServletResponse
-     * @param session HttpSession
+     * @param session  HttpSession
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/myinfo", method = RequestMethod.GET)
     public Msg myInfo(HttpServletRequest request,
                       HttpServletResponse response,
-                      HttpSession session){
+                      HttpSession session) {
         String studentId = session.getAttribute("studentId").toString();
         Student student = studentService.myInfo(studentId);
         return Msg.success(response).add(student);
