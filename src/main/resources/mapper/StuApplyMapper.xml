@@ -70,8 +70,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    apply_id, stu_id, exp_id, apply_status, submit_time
-  </sql>
+        apply_id, stu_id, exp_id, apply_status, submit_time
+    </sql>
     <select id="selectByExample" parameterType="com.webnest.internship.bean.StuApplyExample" resultMap="BaseResultMap">
         select
         <if test="distinct">
@@ -172,9 +172,9 @@
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from stu_apply
-    where apply_id = #{applyId,jdbcType=INTEGER}
-  </delete>
+        delete from stu_apply
+        where apply_id = #{applyId,jdbcType=INTEGER}
+    </delete>
     <delete id="deleteByExample" parameterType="com.webnest.internship.bean.StuApplyExample">
         delete from stu_apply
         <if test="_parameter != null">
@@ -182,11 +182,11 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.webnest.internship.bean.StuApply">
-    insert into stu_apply (apply_id, stu_id, exp_id, 
-      apply_status, submit_time)
-    values (#{applyId,jdbcType=INTEGER}, #{stuId,jdbcType=VARCHAR}, #{expId,jdbcType=INTEGER}, 
-      #{applyStatus,jdbcType=VARCHAR}, #{submitTime,jdbcType=TIMESTAMP})
-  </insert>
+        insert into stu_apply (apply_id, stu_id, exp_id,
+        apply_status, submit_time)
+        values (#{applyId,jdbcType=INTEGER}, #{stuId,jdbcType=VARCHAR}, #{expId,jdbcType=INTEGER},
+        #{applyStatus,jdbcType=VARCHAR}, #{submitTime,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="com.webnest.internship.bean.StuApply">
         insert into stu_apply
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -283,11 +283,11 @@
         where apply_id = #{applyId,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.webnest.internship.bean.StuApply">
-    update stu_apply
-    set stu_id = #{stuId,jdbcType=VARCHAR},
-      exp_id = #{expId,jdbcType=INTEGER},
-      apply_status = #{applyStatus,jdbcType=VARCHAR},
-      submit_time = #{submitTime,jdbcType=TIMESTAMP}
-    where apply_id = #{applyId,jdbcType=INTEGER}
-  </update>
+        update stu_apply
+        set stu_id = #{stuId,jdbcType=VARCHAR},
+        exp_id = #{expId,jdbcType=INTEGER},
+        apply_status = #{applyStatus,jdbcType=VARCHAR},
+        submit_time = #{submitTime,jdbcType=TIMESTAMP}
+        where apply_id = #{applyId,jdbcType=INTEGER}
+    </update>
 </mapper>

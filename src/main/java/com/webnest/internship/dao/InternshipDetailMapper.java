@@ -2,6 +2,7 @@ package com.webnest.internship.dao;
 
 import com.webnest.internship.bean.InternshipDetail;
 import com.webnest.internship.bean.InternshipDetailExample;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +21,11 @@ public interface InternshipDetailMapper {
 
     int insertSelective(InternshipDetail record);
 
-    List<Map<String,Object>> selectAll();
+    List<Map<String, Object>> selectAll();
 
-    Map<String,Object> selectByExpId(int expId);
+    Map<String, Object> selectByExpId(int expId);
 
-    List<Map<String,Object>> selectAllBySta(int status);
+    List<Map<String, Object>> selectAllBySta(int status);
 
     List<InternshipDetail> selectByExample(InternshipDetailExample example);
 
@@ -36,7 +37,7 @@ public interface InternshipDetailMapper {
 
     List<InternshipDetail> selectByEntId(int EnterpriseId);
 
-    List<Map<String,Object>> selectExpId(int enterpriseId);
+    List<Map<String, Object>> selectExpId(int enterpriseId);
 
     List<InternshipDetail> selectByEntIdAndSta(int EnterpriseId, int status);
 

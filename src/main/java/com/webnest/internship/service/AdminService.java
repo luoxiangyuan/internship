@@ -30,7 +30,7 @@ public class AdminService {
         String like = grade + "%";
         List<Map<String, Object>> list = studentMapper.selectByGrade(like);
         List<Map<String, Object>> list1 = studentMapper.selectApplyIdByGrade(like);
-        for (Map<String, Object> map1 : list){
+        for (Map<String, Object> map1 : list) {
             for (Map<String, Object> map : list1) {
                 if (!map.get("stu_id").equals(map1.get("stu_id"))) {
                     map1.put("mark", null);

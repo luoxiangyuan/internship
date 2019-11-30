@@ -77,9 +77,9 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    enterprise_id, type, name, address, email, contact_name, contact_tel, intro, password, 
-    register_time, status, images, check_file
-  </sql>
+        enterprise_id, type, name, address, email, contact_name, contact_tel, intro, password,
+        register_time, status, images, check_file
+    </sql>
     <select id="selectByExample" parameterType="com.webnest.internship.bean.EnterpriseExample"
             resultMap="BaseResultMap">
         select
@@ -121,50 +121,50 @@
     </select>
 
     <select id="selectAllEnt" resultMap="BaseResultMap">
-    SELECT
-    enterprise.enterprise_id,
-    enterprise.type,
-    enterprise.`name`,
-    enterprise.address,
-    enterprise.email,
-    enterprise.contact_name,
-    enterprise.contact_tel,
-    enterprise.intro,
-    enterprise.register_time,
-    enterprise.`status`,
-    enterprise.images,
-    enterprise.check_file
-    FROM
-    enterprise
-    ORDER BY
-    enterprise.register_time
-  </select>
+        SELECT
+        enterprise.enterprise_id,
+        enterprise.type,
+        enterprise.`name`,
+        enterprise.address,
+        enterprise.email,
+        enterprise.contact_name,
+        enterprise.contact_tel,
+        enterprise.intro,
+        enterprise.register_time,
+        enterprise.`status`,
+        enterprise.images,
+        enterprise.check_file
+        FROM
+        enterprise
+        ORDER BY
+        enterprise.register_time
+    </select>
 
-  <select id="selectAllEntBysta" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    SELECT
-      enterprise.enterprise_id,
-      enterprise.type,
-      enterprise.`name`,
-      enterprise.address,
-      enterprise.email,
-      enterprise.contact_name,
-      enterprise.contact_tel,
-      enterprise.intro,
-      enterprise.register_time,
-      enterprise.`status`,
-      enterprise.images,
-      enterprise.check_file
-      FROM
-      enterprise
-      WHERE
-      enterprise.`status`=#{status, jdbcType=INTEGER}
-      ORDER BY
-      enterprise.register_time
-  </select>
+    <select id="selectAllEntBysta" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        enterprise.enterprise_id,
+        enterprise.type,
+        enterprise.`name`,
+        enterprise.address,
+        enterprise.email,
+        enterprise.contact_name,
+        enterprise.contact_tel,
+        enterprise.intro,
+        enterprise.register_time,
+        enterprise.`status`,
+        enterprise.images,
+        enterprise.check_file
+        FROM
+        enterprise
+        WHERE
+        enterprise.`status`=#{status, jdbcType=INTEGER}
+        ORDER BY
+        enterprise.register_time
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from enterprise
-    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
-  </delete>
+        delete from enterprise
+        where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+    </delete>
     <delete id="deleteByExample" parameterType="com.webnest.internship.bean.EnterpriseExample">
         delete from enterprise
         <if test="_parameter != null">
@@ -172,17 +172,17 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.webnest.internship.bean.Enterprise">
-    insert into enterprise (enterprise_id, type, name, 
-      address, email, contact_name, 
-      contact_tel, intro, password, 
-      register_time, status, images, 
-      check_file)
-    values (#{enterpriseId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, 
-      #{contactTel,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{registerTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, 
-      #{checkFile,jdbcType=VARCHAR})
-  </insert>
+        insert into enterprise (enterprise_id, type, name,
+        address, email, contact_name,
+        contact_tel, intro, password,
+        register_time, status, images,
+        check_file)
+        values (#{enterpriseId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR},
+        #{contactTel,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{registerTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR},
+        #{checkFile,jdbcType=VARCHAR})
+    </insert>
     <insert id="insertSelective" parameterType="com.webnest.internship.bean.Enterprise">
         insert into enterprise
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -384,19 +384,19 @@
         where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.webnest.internship.bean.Enterprise">
-    update enterprise
-    set type = #{type,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      contact_name = #{contactName,jdbcType=VARCHAR},
-      contact_tel = #{contactTel,jdbcType=VARCHAR},
-      intro = #{intro,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      register_time = #{registerTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=VARCHAR},
-      images = #{images,jdbcType=VARCHAR},
-      check_file = #{checkFile,jdbcType=VARCHAR}
-    where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
-  </update>
+        update enterprise
+        set type = #{type,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        contact_name = #{contactName,jdbcType=VARCHAR},
+        contact_tel = #{contactTel,jdbcType=VARCHAR},
+        intro = #{intro,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        register_time = #{registerTime,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=VARCHAR},
+        images = #{images,jdbcType=VARCHAR},
+        check_file = #{checkFile,jdbcType=VARCHAR}
+        where enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+    </update>
 </mapper>

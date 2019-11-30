@@ -2,6 +2,7 @@ package com.webnest.internship.dao;
 
 import com.webnest.internship.bean.Student;
 import com.webnest.internship.bean.StudentExample;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +21,9 @@ public interface StudentMapper {
 
     int insertSelective(Student record);
 
-    List<Map<String,Object>> selectApplyIdByGrade(String grade);
+    List<Map<String, Object>> selectApplyIdByGrade(String grade);
 
-    List<Map<String,Object>> selectByGrade(String grade);
+    List<Map<String, Object>> selectByGrade(String grade);
 
     List<Student> selectByExample(StudentExample example);
 

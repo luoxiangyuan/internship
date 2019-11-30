@@ -2,7 +2,9 @@ package com.webnest.internship.dao;
 
 import com.webnest.internship.bean.Enterprise;
 import com.webnest.internship.bean.EnterpriseExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +24,7 @@ public interface EnterpriseMapper {
 
     List<Enterprise> selectAllEnt();
 
-    Enterprise selectByEmail(String email,String password);
+    Enterprise selectByEmail(String email, String password);
 
     List<Enterprise> selectAllEntBysta(int status);
 

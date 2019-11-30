@@ -75,11 +75,11 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    internship_id, topic, enterprise_id, description, status, need_num, exp_end_time, 
-    submit_time, apply_end_time, exp_modify_time, exp_begin_time
-  </sql>
+        internship_id, topic, enterprise_id, description, status, need_num, exp_end_time,
+        submit_time, apply_end_time, exp_modify_time, exp_begin_time
+    </sql>
     <select id="selectAll" resultType="java.util.Map">
-    SELECT
+        SELECT
         internship_detail.internship_id AS expId,
         internship_detail.topic,
         enterprise.`name` AS enterprise,
@@ -94,10 +94,10 @@
         INNER JOIN enterprise ON internship_detail.enterprise_id = enterprise.enterprise_id
         ORDER BY
         internship_detail.exp_moselectByExpIddify_time DESC
-  </select>
+    </select>
 
     <select id="selectByExpId" parameterType="java.lang.Integer" resultType="java.util.Map">
-    SELECT
+        SELECT
         internship_detail.internship_id AS expId,
         internship_detail.topic,
         internship_detail.description,
@@ -108,14 +108,14 @@
         internship_detail.need_num,
         internship_detail.`status`,
         internship_detail.exp_end_time
-    FROM
+        FROM
         internship_detail
-    INNER JOIN enterprise ON internship_detail.enterprise_id = enterprise.enterprise_id
-    WHERE
+        INNER JOIN enterprise ON internship_detail.enterprise_id = enterprise.enterprise_id
+        WHERE
         internship_detail.internship_id = #{expId,jdbcType=INTEGER}
-    ORDER BY
+        ORDER BY
         internship_detail.exp_modify_time DESC
-  </select>
+    </select>
 
 
     <select id="getSubmitNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
@@ -129,7 +129,7 @@
 
 
     <select id="selectAllBySta" parameterType="java.lang.Integer" resultType="java.util.Map">
-    SELECT
+        SELECT
         internship_detail.internship_id AS expId,
         internship_detail.topic,
         enterprise.`name` AS enterprise,
@@ -139,14 +139,14 @@
         internship_detail.need_num,
         internship_detail.exp_end_time,
         internship_detail.`status`
-    FROM
+        FROM
         internship_detail
-    INNER JOIN enterprise ON internship_detail.enterprise_id = enterprise.enterprise_id
-    WHERE
+        INNER JOIN enterprise ON internship_detail.enterprise_id = enterprise.enterprise_id
+        WHERE
         internship_detail.`status`=#{status,jdbcType=INTEGER}
-    ORDER BY
+        ORDER BY
         internship_detail.exp_modify_time DESC
-  </select>
+    </select>
 
     <select id="selectByExample" parameterType="com.webnest.internship.bean.InternshipDetailExample"
             resultMap="BaseResultMap">
@@ -187,8 +187,8 @@
         stu_apply
         WHERE
         stu_apply.apply_status = 4 or
-         stu_apply.apply_status = 2
-         AND
+        stu_apply.apply_status = 2
+        AND
         stu_apply.exp_id = #{expId,jdbcType=INTEGER}
     </select>
 
@@ -200,14 +200,14 @@
     </select>
 
     <select id="selectExpId" parameterType="java.lang.Integer" resultType="java.util.Map">
-    SELECT
-      internship_detail.internship_id AS expId,
-      internship_detail.enterprise_id AS enterpriseId
-      FROM
-      internship_detail
-      WHERE
-      internship_detail.enterprise_id = #{enterpriseId,jdbcType=INTEGER}
-  </select>
+        SELECT
+        internship_detail.internship_id AS expId,
+        internship_detail.enterprise_id AS enterpriseId
+        FROM
+        internship_detail
+        WHERE
+        internship_detail.enterprise_id = #{enterpriseId,jdbcType=INTEGER}
+    </select>
 
     <select id="selectByEntIdAndSta" resultMap="BaseResultMap">
         select
@@ -216,9 +216,9 @@
         where enterprise_id = #{EnterpriseId,jdbcType=INTEGER} AND status = #{status, jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from internship_detail
-    where internship_id = #{internshipId,jdbcType=INTEGER}
-  </delete>
+        delete from internship_detail
+        where internship_id = #{internshipId,jdbcType=INTEGER}
+    </delete>
     <delete id="deleteByExample" parameterType="com.webnest.internship.bean.InternshipDetailExample">
         delete from internship_detail
         <if test="_parameter != null">
@@ -226,15 +226,15 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.webnest.internship.bean.InternshipDetail">
-    insert into internship_detail (internship_id, topic, enterprise_id, 
-      description, status, need_num, 
-      exp_end_time, submit_time, apply_end_time, 
-      exp_modify_time, exp_begin_time)
-    values (#{internshipId,jdbcType=INTEGER}, #{topic,jdbcType=VARCHAR}, #{enterpriseId,jdbcType=INTEGER}, 
-      #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{needNum,jdbcType=INTEGER}, 
-      #{expEndTime,jdbcType=TIMESTAMP}, #{submitTime,jdbcType=TIMESTAMP}, #{applyEndTime,jdbcType=TIMESTAMP}, 
-      #{expModifyTime,jdbcType=TIMESTAMP}, #{expBeginTime,jdbcType=TIMESTAMP})
-  </insert>
+        insert into internship_detail (internship_id, topic, enterprise_id,
+        description, status, need_num,
+        exp_end_time, submit_time, apply_end_time,
+        exp_modify_time, exp_begin_time)
+        values (#{internshipId,jdbcType=INTEGER}, #{topic,jdbcType=VARCHAR}, #{enterpriseId,jdbcType=INTEGER},
+        #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{needNum,jdbcType=INTEGER},
+        #{expEndTime,jdbcType=TIMESTAMP}, #{submitTime,jdbcType=TIMESTAMP}, #{applyEndTime,jdbcType=TIMESTAMP},
+        #{expModifyTime,jdbcType=TIMESTAMP}, #{expBeginTime,jdbcType=TIMESTAMP})
+    </insert>
     <insert id="insertSelective" parameterType="com.webnest.internship.bean.InternshipDetail">
         insert into internship_detail
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -410,17 +410,17 @@
         where internship_id = #{internshipId,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.webnest.internship.bean.InternshipDetail">
-    update internship_detail
-    set topic = #{topic,jdbcType=VARCHAR},
-      enterprise_id = #{enterpriseId,jdbcType=INTEGER},
-      description = #{description,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
-      need_num = #{needNum,jdbcType=INTEGER},
-      exp_end_time = #{expEndTime,jdbcType=TIMESTAMP},
-      submit_time = #{submitTime,jdbcType=TIMESTAMP},
-      apply_end_time = #{applyEndTime,jdbcType=TIMESTAMP},
-      exp_modify_time = #{expModifyTime,jdbcType=TIMESTAMP},
-      exp_begin_time = #{expBeginTime,jdbcType=TIMESTAMP}
-    where internship_id = #{internshipId,jdbcType=INTEGER}
-  </update>
+        update internship_detail
+        set topic = #{topic,jdbcType=VARCHAR},
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+        description = #{description,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR},
+        need_num = #{needNum,jdbcType=INTEGER},
+        exp_end_time = #{expEndTime,jdbcType=TIMESTAMP},
+        submit_time = #{submitTime,jdbcType=TIMESTAMP},
+        apply_end_time = #{applyEndTime,jdbcType=TIMESTAMP},
+        exp_modify_time = #{expModifyTime,jdbcType=TIMESTAMP},
+        exp_begin_time = #{expBeginTime,jdbcType=TIMESTAMP}
+        where internship_id = #{internshipId,jdbcType=INTEGER}
+    </update>
 </mapper>

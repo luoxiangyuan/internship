@@ -25,12 +25,12 @@ public class ApplyService {
     }
 
     //根据实训id和申请状态查询申请
-    public List<Map<String, Object>> getApplyListBySta(int internshipId,int status) {
-        return stuApplyMapper.selectByExpIdSta(internshipId,status);
+    public List<Map<String, Object>> getApplyListBySta(int internshipId, int status) {
+        return stuApplyMapper.selectByExpIdSta(internshipId, status);
     }
 
     //根据实训id管理学生
-    public List<Map<String, Object>> ManageStu(int expId){
+    public List<Map<String, Object>> ManageStu(int expId) {
         return stuApplyMapper.selectStu(expId);
     }
 
@@ -40,7 +40,7 @@ public class ApplyService {
     }
 
     //根据申请id取得申请
-    public StuApply getApply(int apply_id){
+    public StuApply getApply(int apply_id) {
         return stuApplyMapper.selectByPrimaryKey(apply_id);
     }
 }
