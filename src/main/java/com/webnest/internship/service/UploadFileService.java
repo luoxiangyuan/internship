@@ -16,19 +16,19 @@ public class UploadFileService {
 
     public String upload(MultipartFile uploadFile, String path, HttpServletRequest req) {
 
-        if(uploadFile.isEmpty()){
+        if (uploadFile.isEmpty()) {
             return null;
         }
-//        String basePath = "/usr/local/Springboot/WebNest/uploadFiles";
-        String basePath = "G:/Workspace/IntelliJ IDEA/uploadFiles";
+        String basePath = "/usr/local/Springboot/WebNest/uploadFiles";
+//        String basePath = "G:/Workspace/IntelliJ IDEA/uploadFiles";
         String filePath = new String();
 
 
         File folder = new File(basePath + path);
-        if(!folder.exists()){
+        if (!folder.exists()) {
             folder.mkdirs();
         }
-        try{
+        try {
             uploadFile.transferTo(new File(folder, Objects.requireNonNull(uploadFile.getOriginalFilename())));
             filePath = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/" + "WebNest/uploadFiles"
                     + path + "/" + uploadFile.getOriginalFilename();

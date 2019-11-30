@@ -27,8 +27,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //Linux下
-//        registry.addResourceHandler("/WebNest/uploadFiles/**").addResourceLocations("file:/usr/local/Springboot/WebNest/uploadFiles/");
+        registry.addResourceHandler("/WebNest/uploadFiles/**").addResourceLocations("file:/usr/local/Springboot/WebNest/uploadFiles/");
         //Windows下
-        registry.addResourceHandler("/WebNest/uploadFiles/**").addResourceLocations("file:G:/Workspace/IntelliJ IDEA/uploadFiles/");
+//        registry.addResourceHandler("/WebNest/uploadFiles/**").addResourceLocations("file:G:/Workspace/IntelliJ IDEA/uploadFiles/");
     }
 }
