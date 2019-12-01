@@ -61,13 +61,9 @@ public class AdminController {
 
     //审核实训
     @PutMapping("/internship")
-    public Msg checkInternship(@RequestParam String expid, @RequestParam boolean passed, HttpServletResponse response) {
+    public Msg checkInternship(@RequestParam String expid, @RequestParam Integer status, HttpServletResponse response) {
         InternshipDetail internshipDetail = internshipService.getInternship(Integer.valueOf(expid));
-        if (passed == true) {
-            internshipDetail.setStatus(1);
-        } else {
-            internshipDetail.setStatus(2);
-        }
+        internshipDetail.setStatus(status);
         internshipService.updateInternship(internshipDetail);
         return Msg.success(response);
     }
