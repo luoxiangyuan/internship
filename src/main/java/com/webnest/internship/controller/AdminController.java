@@ -60,7 +60,7 @@ public class AdminController {
     }
 
     //审核实训
-    @PostMapping("/internship")
+    @PutMapping("/internship")
     public Msg checkInternship(@RequestParam String expid, @RequestParam boolean passed, HttpServletResponse response) {
         InternshipDetail internshipDetail = internshipService.getInternship(Integer.valueOf(expid));
         if (passed == true) {
