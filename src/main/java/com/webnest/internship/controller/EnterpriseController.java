@@ -63,10 +63,11 @@ public class EnterpriseController {
             return msg;
         }
         String checkFile = uploadFileService.upload(qualificate_file, "/enterprise/" + name, request);
-        List<String> imageURL = new ArrayList<>();
+        String imageURL = "";
         for (MultipartFile image : images) {
-            imageURL.add(uploadFileService.upload(image, "/enterprise/" + name + "/image", request));
+            imageURL += uploadFileService.upload(image, "/enterprise/" + name + "/image", request)+",";
         }
+        imageURL = imageURL.substring(0,imageURL.length()-1);
         Enterprise enterprise = new Enterprise();
 
         enterprise.setType(type);
