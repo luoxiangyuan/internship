@@ -24,6 +24,46 @@ public class StuApply {
 
     private Student student;
 
+    private String topic;
+
+    private String enterprise;
+
+    private Date exp_begin_time;
+
+    private Date exp_end_time;
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public String getEnterprise() {
+        return enterprise;
+    }
+
+    public void setEnterprise(String enterprise) {
+        this.enterprise = enterprise;
+    }
+
+    public Date getExp_begin_time() {
+        return exp_begin_time;
+    }
+
+    public void setExp_begin_time(Date exp_begin_time) {
+        this.exp_begin_time = exp_begin_time;
+    }
+
+    public Date getExp_end_time() {
+        return exp_end_time;
+    }
+
+    public void setExp_end_time(Date exp_end_time) {
+        this.exp_end_time = exp_end_time;
+    }
+
     public StuApply() {
 
     }

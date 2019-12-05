@@ -1,6 +1,7 @@
 package com.webnest.internship.service;
 
 import com.webnest.internship.bean.*;
+import com.webnest.internship.dao.EnterpriseMapper;
 import com.webnest.internship.dao.InternshipDetailMapper;
 import com.webnest.internship.dao.StuApplyMapper;
 import com.webnest.internship.dao.StudentMapper;
@@ -28,6 +29,9 @@ public class StudentService {
 
     @Autowired
     StuApplyMapper stuApplyMapper;
+
+    @Autowired
+    EnterpriseMapper enterpriseMapper;
 
     /**
      * 学生登陆
@@ -133,16 +137,29 @@ public class StudentService {
      * @param studentId 学生id
      * @return 学生所有申请信息
      */
-    public List<StuApply> getApplicationList(String studentId) {
-        List<StuApply> applicationList = new ArrayList<>();
+    public List getApplicationList(String studentId) {
+        List applicationList = new ArrayList<>();
         List<StuApply> stuApply = stuApplyMapper.selectByExample(null);
         for (StuApply stuapply : stuApply) {
-            if (stuapply.getStuId().equals(studentId)) {
+            if (stuapply.getStuId().equals(studentId)){
+                InternshipDetail detail = internshipDetailMapper.selectByPrimaryKey(stuapply.getExpId());
+                if(detail.getInternshipId() == stuapply.getExpId()){
+                    String  topic = detail.getTopic();
+                    String enterprise = enterpriseMapper.selectByPrimaryKey(detail.getEnterpriseId()).getName();
+                    Date exp_begin_time = detail.getExpBeginTime();
+                    Date exp_end_time = detail.getExpEndTime();
+                    stuapply.setTopic(topic);
+                    stuapply.setEnterprise(enterprise);
+                    stuapply.setExp_begin_time(exp_begin_time);
+                    stuapply.setExp_end_time(exp_end_time);
+                }
                 applicationList.add(stuapply);
             }
         }
         return applicationList;
     }
+
+
 
     /**
      * 修改个人资料

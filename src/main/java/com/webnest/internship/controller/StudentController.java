@@ -178,7 +178,8 @@ public class StudentController {
     public Msg applicationList(HttpServletRequest request,
                                HttpServletResponse response,
                                HttpSession session) {
-        String studentId = session.getAttribute("studentId").toString();
+//        String studentId = session.getAttribute("studentId").toString();
+        String studentId = "1725121013";
         return Msg.success(response).add(studentService.getApplicationList(studentId));
     }
 
