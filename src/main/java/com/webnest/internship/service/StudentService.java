@@ -1,18 +1,15 @@
 package com.webnest.internship.service;
 
-import com.webnest.internship.bean.InternshipDetail;
-import com.webnest.internship.bean.StuApplyExample;
-import com.webnest.internship.bean.Student;
+import com.webnest.internship.bean.*;
 import com.webnest.internship.dao.InternshipDetailMapper;
 import com.webnest.internship.dao.StuApplyMapper;
 import com.webnest.internship.dao.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.webnest.internship.bean.StuApply;
 
 /**
  * @auther: Monster
@@ -42,12 +39,16 @@ public class StudentService {
     public boolean login(String email, String password) {
         List<Student> list = studentMapper.selectByExample(null);
         for (Student student : list) {
+            System.out.println(student.getEmail()+",,,"+email);
             if (student.getEmail().equals(email)) {
                 if (student.getPassword().equals(password)) {
+                    System.out.println("login ");
                     return true;
                 }
             }
         }
+        System.out.println("login fail");
+
         return false;
     }
 
@@ -118,6 +119,14 @@ public class StudentService {
         return studentMapper.selectByPrimaryKey(id);
     }
 
+    public String getStudentIDByEmail(String email) {
+        StudentExample studentExample = new StudentExample();
+        StudentExample.Criteria criteria = studentExample.createCriteria();
+        criteria.andEmailEqualTo("huanjianli@outlook.com");
+        System.out.println("fuck"+studentMapper.selectByExample(studentExample));
+        return studentMapper.selectByExample(studentExample).get(0).getStuId();
+    }
+
     /**
      * 获取学生申请
      *
@@ -125,7 +134,7 @@ public class StudentService {
      * @return 学生所有申请信息
      */
     public List<StuApply> getApplicationList(String studentId) {
-        List<StuApply> applicationList = null;
+        List<StuApply> applicationList = new ArrayList<>();
         List<StuApply> stuApply = stuApplyMapper.selectByExample(null);
         for (StuApply stuapply : stuApply) {
             if (stuapply.getStuId().equals(studentId)) {

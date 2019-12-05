@@ -101,7 +101,7 @@
         internship_detail.internship_id AS expId,
         internship_detail.topic,
         internship_detail.description,
-        enterprise.`name` AS enterprise,
+        enterprise.`enterprise_id` AS enterprise,
         internship_detail.exp_begin_time,
         internship_detail.apply_end_time,
         internship_detail.submit_time,

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.ConsoleHandler;
 
 
 @RestController
@@ -239,6 +240,7 @@ public class EnterpriseController {
             return Msg.success(response).add(enterpriseService.getEntprise(enterpriseId));
         }
         if (enterprise != null) { //当前为企业
+            System.out.println("entid"+Integer.valueOf(enterprise));
             return Msg.success(response).add(enterpriseService.getEntprise(Integer.valueOf(enterprise)));
         }
         return Msg.fail(response);

@@ -45,8 +45,12 @@ public class StudentController {
                      @RequestParam(value = "email") String email,
                      @RequestParam(value = "password") String password,
                      HttpSession session) {
+        System.out.println("controller email"+email);
         if (studentService.login(email, password)) {
-            session.setAttribute("studentId", email);
+
+            String StuID=studentService.getStudentIDByEmail(email);
+            System.out.println(StuID);
+            session.setAttribute("studentId", StuID);
             return Msg.success(response);
         }
         return Msg.fail(response);
