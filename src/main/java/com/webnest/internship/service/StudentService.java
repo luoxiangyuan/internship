@@ -106,11 +106,10 @@ public class StudentService {
      * 学生确认实训
      *
      * @param applyId   报名id
-     * @param id        实训id
-     * @param studentId 学生id
+     * @param status    状态
      */
-    public void putApplication(int applyId, int id, String studentId) {
-        stuApplyMapper.updateByPrimaryKeySelective(new StuApply(applyId, studentId, id, 0, null));
+    public void putApplication(int applyId, int status) {
+        stuApplyMapper.updateByPrimaryKeySelective(new StuApply(applyId, null, null, status, null));
     }
 
     /**

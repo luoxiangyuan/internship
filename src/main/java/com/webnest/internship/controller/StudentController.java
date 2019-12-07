@@ -2,9 +2,11 @@ package com.webnest.internship.controller;
 
 import com.webnest.internship.bean.InternshipDetail;
 import com.webnest.internship.bean.Msg;
+import com.webnest.internship.bean.StuApply;
 import com.webnest.internship.bean.Student;
 import com.webnest.internship.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -127,27 +129,27 @@ public class StudentController {
         return Msg.success(response);
     }
 
-    /**
-     * 学生确认实训
-     *
-     * @param request  HttpServletRequest
-     * @param response HttpServletResponse
-     * @param id       实训id
-     * @param applyId  报名id
-     * @param session  HttpSession
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/application", method = RequestMethod.PUT)
-    public Msg PutApplication(HttpServletRequest request,
-                              HttpServletResponse response,
-                              @RequestParam(value = "exp_id") String id,
-                              @RequestParam(value = "apply_id") int applyId,
-                              HttpSession session) {
-        String studentId = session.getAttribute("studentId").toString();
-        studentService.putApplication(applyId, Integer.valueOf(id), studentId);
-        return Msg.success(response);
-    }
+//    /**
+//     * 学生确认实训
+//     *
+//     * @param request  HttpServletRequest
+//     * @param response HttpServletResponse
+//     * @param id       实训id
+//     * @param applyId  报名id
+//     * @param session  HttpSession
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping(value = "/application", method = RequestMethod.PUT)
+//    public Msg PutApplication(HttpServletRequest request,
+//                              HttpServletResponse response,
+//                              @RequestParam(value = "exp_id") String id,
+//                              @RequestParam(value = "apply_id") int applyId,
+//                              HttpSession session) {
+//        String studentId = session.getAttribute("studentId").toString();
+//        studentService.putApplication(applyId, Integer.valueOf(id), studentId);
+//        return Msg.success(response);
+//    }
 
     /**
      * 查询学生信息
@@ -178,8 +180,8 @@ public class StudentController {
     public Msg applicationList(HttpServletRequest request,
                                HttpServletResponse response,
                                HttpSession session) {
-//        String studentId = session.getAttribute("studentId").toString();
-        String studentId = "1725121013";
+        String studentId = session.getAttribute("studentId").toString();
+//        String studentId = "1725121013";
         return Msg.success(response).add(studentService.getApplicationList(studentId));
     }
 
@@ -225,5 +227,41 @@ public class StudentController {
         String studentId = session.getAttribute("studentId").toString();
         Student student = studentService.myInfo(studentId);
         return Msg.success(response).add(student);
+    }
+
+    /**
+     * 新  学生确认
+     * @param request      HttpServletRequest
+     * @param response     HttpServletResponse
+     * @param session      HttpSession
+     * @param apply_id     申请ID
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/confirm", method = RequestMethod.PUT)
+    public Msg confirm(HttpServletRequest request,
+                       HttpServletResponse response,
+                       HttpSession session,
+                       @RequestParam(value = "apply_id") String apply_id) {
+//        1、确认是当前学生的applyid
+        boolean permission = false;
+        String studentId = session.getAttribute("studentId").toString();
+//        String studentId = "1725121013";
+        List<StuApply> lists = studentService.getApplicationList(studentId);
+        for (StuApply list : lists) {
+            if (list.getStuId().equals(studentId)) {
+                permission = true;
+            }
+        }
+//        2、删除更改apply_id的状态
+//        3、更改该学生其他申请的状态
+        if (permission) {
+            for(StuApply list : lists){
+                studentService.putApplication(Integer.valueOf(list.getApplyId()),5);
+            }
+            studentService.putApplication(Integer.valueOf(apply_id),4);
+            return Msg.success(response);
+        }
+        return Msg.fail(response);
     }
 }
